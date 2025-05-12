@@ -49,7 +49,7 @@
         static void ShowStartScreen()
         {
             Console.Clear();
-            Console.WriteLine("======================");
+            Console.WriteLine("======================"); 
             Console.WriteLine("    KONSOLEN SPIEL    ");
             Console.WriteLine("======================");
             Console.WriteLine("Pfeiltasten: Links/Rechts");
