@@ -31,6 +31,7 @@
         static bool gewonnen = false;
         static bool verloren = false;
         static bool gamescreen = true;
+        static bool playagain = false;
 
         static void Main()
         {
@@ -49,18 +50,28 @@
                 Render();   // Spielfeld neu zeichnen
                 Thread.Sleep(250); // Spieltempo regulieren (250 ms)
 
-                if (score == 10) { gewonnen = true; }
+                if (score == 160) { gewonnen = true; }
                 
                 if (gewonnen == true)
                 {
                     score = 0;
                     ShowWinningScreen();
+                    if (playagain == true)
+                    {
+                        InitialisiereSpiel();
+                        playagain = false;
+                    }
                 }
 
                 if (verloren == true)
                 {
                     score = 0;
                     ShowGameOverScreen();
+                    if (playagain == true)
+                    {
+                        InitialisiereSpiel();
+                        playagain = false;
+                    }
                 }
             }
             inputThread.Join();
@@ -203,6 +214,7 @@
                 {
                     verloren = false;
                     gamescreen = false;
+                    playagain = true;
                 }
 
                 if (Console.ReadKey(true).Key == ConsoleKey.Escape)
@@ -225,8 +237,9 @@
             {
                 if (Console.ReadKey(true).Key == ConsoleKey.Enter)
                 {
-                    verloren = false;
+                    gewonnen = false;
                     gamescreen = false;
+                    playagain = true;
                 }
 
                 if (Console.ReadKey(true).Key == ConsoleKey.Escape)
