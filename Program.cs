@@ -25,8 +25,12 @@
         static int playerX = 20;
         static int playerY = 16;
 
-        //schuss
+        //sonstige werte
         static bool schuss = false;
+        static int score = 0;
+        static bool gewonnen = false;
+        static bool verloren = false;
+        static bool gamescreen = true;
 
         static void Main()
         {
@@ -36,7 +40,7 @@
             ShowStartScreen();
             InitialisiereSpiel();
             Render();
-            Thread.Sleep(1000);
+            Thread.Sleep(10);
 
             // Game Loop 
             while (spiel)
@@ -44,9 +48,21 @@
                 Update();   // Spielerposition aktualisieren
                 Render();   // Spielfeld neu zeichnen
                 Thread.Sleep(250); // Spieltempo regulieren (250 ms)
-            }
 
-            ShowGameOverScreen();
+                if (score == 10) { gewonnen = true; }
+                
+                if (gewonnen == true)
+                {
+                    score = 0;
+                    ShowWinningScreen();
+                }
+
+                if (verloren == true)
+                {
+                    score = 0;
+                    ShowGameOverScreen();
+                }
+            }
             inputThread.Join();
         }
 
@@ -86,6 +102,7 @@
                     {
                         grid[reihe - 1, symbol] = ' ';
                         grid[reihe, symbol] = ' ';
+                        score++;
                     }
                     else if (grid[reihe, symbol] == '|' && grid[reihe - 1, symbol] == '\u2588')
                     {
@@ -123,7 +140,7 @@
                             inputX = -1;
                             break;
                         case ConsoleKey.Escape:
-                            spiel = false;
+                            verloren = true;
                             break;
                         case ConsoleKey.UpArrow:
                             schuss = true;
@@ -179,8 +196,46 @@
             Console.WriteLine("======================");
             Console.WriteLine("       GAME OVER      ");
             Console.WriteLine("======================");
-            Console.WriteLine("Drücke eine Taste zum Beenden...");
-            Console.ReadKey(true);
+            Console.WriteLine("Drücke Enter um neuzustarten oder esc um zum hauptmenü zurückzukehren");
+            while (gamescreen == true)
+            {
+                if (Console.ReadKey(true).Key == ConsoleKey.Enter)
+                {
+                    verloren = false;
+                    gamescreen = false;
+                }
+
+                if (Console.ReadKey(true).Key == ConsoleKey.Escape)
+                {
+
+                }
+            }
+            gamescreen = true;
+            Console.Clear();
+        }
+
+        static void ShowWinningScreen()
+        {
+            Console.Clear();
+            Console.WriteLine("======================");
+            Console.WriteLine("    Spiel gewonnen    ");
+            Console.WriteLine("======================");
+            Console.WriteLine("Drücke Enter um neuzustarten oder esc um zum hauptmenü zurückzukehren");
+            while (gamescreen == true)
+            {
+                if (Console.ReadKey(true).Key == ConsoleKey.Enter)
+                {
+                    verloren = false;
+                    gamescreen = false;
+                }
+
+                if (Console.ReadKey(true).Key == ConsoleKey.Escape)
+                {
+
+                }
+            }
+            gamescreen = true;
+            Console.Clear();
         }
     }
 }
