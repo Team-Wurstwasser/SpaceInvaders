@@ -25,6 +25,9 @@
         static int playerX = 20;
         static int playerY = 16;
 
+        //schuss
+        static bool schuss = false;
+
         static void Main()
         {
             Console.CursorVisible = false;
@@ -40,32 +43,13 @@
             {
                 Update();   // Spielerposition aktualisieren
                 Render();   // Spielfeld neu zeichnen
-                Thread.Sleep(150); // Spieltempo regulieren (250 ms)
+                Thread.Sleep(250); // Spieltempo regulieren (250 ms)
             }
 
             ShowGameOverScreen();
             inputThread.Join();
         }
-        static void ShowStartScreen()
-        {
-            Console.Clear();
-            Console.WriteLine("======================"); 
-            Console.WriteLine("    KONSOLEN SPIEL    ");
-            Console.WriteLine("======================");
-            Console.WriteLine("Pfeiltasten: Links/Rechts");
-            Console.WriteLine("Taste Enter zum Starten...");
-            while (Console.ReadKey(true).Key != ConsoleKey.Enter) { }
-            Console.Clear();
-        }
-        static void ShowGameOverScreen()
-        {
-            Console.Clear();
-            Console.WriteLine("======================");
-            Console.WriteLine("       GAME OVER      ");
-            Console.WriteLine("======================");
-            Console.WriteLine("Drücke eine Taste zum Beenden...");
-            Console.ReadKey(true);
-        }
+
         static void Update()
         {
             //neue spielerposition erstellen
@@ -81,6 +65,47 @@
                 playerX = newPlayerX;
             }
             inputX = 0;
+
+            //schießen
+            if (schuss == true && (grid[playerY -1, playerX] == ' ') && (grid[playerY - 2, playerX] == ' '))
+            {
+                grid[playerY - 1, playerX] = '|';
+            }
+            schuss = false;
+
+            for (int reihe = 0; reihe < grid.GetLength(0); reihe++)
+            {
+                for (int symbol = 0; symbol < grid.GetLength(1); symbol++)
+                {
+                    if (grid[reihe, symbol]== '|' && grid[reihe - 1, symbol] == ' ')
+                    {
+                        grid[reihe - 1, symbol] = '|';
+                        grid[reihe, symbol] = ' ';
+                    }
+                    else if (grid[reihe, symbol] == '|' && grid[reihe - 1, symbol] == '*')
+                    {
+                        grid[reihe - 1, symbol] = ' ';
+                        grid[reihe, symbol] = ' ';
+                    }
+                    else if (grid[reihe, symbol] == '|' && grid[reihe - 1, symbol] == '\u2588')
+                    {
+                        grid[reihe, symbol] = ' ';
+                    }
+                }
+            }
+        }
+        static void Render()
+        {
+            // Cursor zurücksetzen "übermahlt" letztes Frame
+            Console.SetCursorPosition(0, 0);
+            for (int reihe = 0; reihe < grid.GetLength(0); reihe++)
+            {
+                for (int symbol = 0; symbol < grid.GetLength(1); symbol++)
+                {
+                    Console.Write(grid[reihe, symbol]);
+                }
+                Console.WriteLine(); // Neue Zeile nach jeder Reihe
+            }
         }
         static void ReadInput()
         {
@@ -100,23 +125,14 @@
                         case ConsoleKey.Escape:
                             spiel = false;
                             break;
+                        case ConsoleKey.UpArrow:
+                            schuss = true;
+                            break;
                     }
                 }
             }
         }
-        static void Render()
-        {
-            // Cursor zurücksetzen "übermahlt" letztes Frame
-            Console.SetCursorPosition(0, 0);
-            for (int reihe = 0; reihe < grid.GetLength(0); reihe++)
-            {
-                for (int symbol = 0; symbol < grid.GetLength(1); symbol++)
-                {
-                    Console.Write(grid[reihe, symbol]);
-                }
-                Console.WriteLine(); // Neue Zeile nach jeder Reihe
-            }
-        }
+
         static void InitialisiereSpiel()
         {
             Console.SetCursorPosition(0, 0);
@@ -145,6 +161,26 @@
             // Spieler platzieren
             grid[playerY, playerX] = player;
 
+        }
+        static void ShowStartScreen()
+        {
+            Console.Clear();
+            Console.WriteLine("======================");
+            Console.WriteLine("    KONSOLEN SPIEL    ");
+            Console.WriteLine("======================");
+            Console.WriteLine("Pfeiltasten: Links/Rechts");
+            Console.WriteLine("Taste Enter zum Starten...");
+            while (Console.ReadKey(true).Key != ConsoleKey.Enter) { }
+            Console.Clear();
+        }
+        static void ShowGameOverScreen()
+        {
+            Console.Clear();
+            Console.WriteLine("======================");
+            Console.WriteLine("       GAME OVER      ");
+            Console.WriteLine("======================");
+            Console.WriteLine("Drücke eine Taste zum Beenden...");
+            Console.ReadKey(true);
         }
     }
 }
