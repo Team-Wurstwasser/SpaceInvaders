@@ -32,13 +32,14 @@
         static bool verloren = false;
         static bool gamescreen = true;
         static bool playagain = false;
+        static bool menu = false;
 
         static void Main()
         {
             Console.CursorVisible = false;
             Thread inputThread = new Thread(ReadInput);
             inputThread.Start();
-            ShowStartScreen();
+            ShowStartMenu();
             InitialisiereSpiel();
             Render();
             Thread.Sleep(10);
@@ -46,12 +47,11 @@
             // Game Loop 
             while (spiel)
             {
-                Update();   // Spielerposition aktualisieren
-                Render();   // Spielfeld neu zeichnen
-                Thread.Sleep(250); // Spieltempo regulieren (250 ms)
+                if (menu == true)
+                {
+                    ShowStartMenu();
+                }
 
-                if (score == 160) { gewonnen = true; }
-                
                 if (gewonnen == true)
                 {
                     score = 0;
@@ -73,6 +73,12 @@
                         playagain = false;
                     }
                 }
+
+                Update();   // Spielerposition aktualisieren
+                Render();   // Spielfeld neu zeichnen
+                Thread.Sleep(250); // Spieltempo regulieren (250 ms)
+
+                if (score == 160) { gewonnen = true; }
             }
             inputThread.Join();
         }
@@ -190,17 +196,7 @@
             grid[playerY, playerX] = player;
 
         }
-        static void ShowStartScreen()
-        {
-            Console.Clear();
-            Console.WriteLine("======================");
-            Console.WriteLine("    KONSOLEN SPIEL    ");
-            Console.WriteLine("======================");
-            Console.WriteLine("Pfeiltasten: Links/Rechts");
-            Console.WriteLine("Taste Enter zum Starten...");
-            while (Console.ReadKey(true).Key != ConsoleKey.Enter) { }
-            Console.Clear();
-        }
+
         static void ShowGameOverScreen()
         {
             Console.Clear();
@@ -219,7 +215,9 @@
 
                 if (Console.ReadKey(true).Key == ConsoleKey.Escape)
                 {
-
+                    verloren = false;
+                    gamescreen = false;
+                    menu = true;
                 }
             }
             gamescreen = true;
@@ -244,10 +242,53 @@
 
                 if (Console.ReadKey(true).Key == ConsoleKey.Escape)
                 {
-
+                    gewonnen = false;
+                    gamescreen = false;
+                    menu = true;
                 }
             }
             gamescreen = true;
+            Console.Clear();
+        }
+        static void ShowStartMenu()
+        {
+            Console.Clear();
+            Console.WriteLine("+===========================================================+");
+            Console.WriteLine("|               S P A C E   I N V A D E R S                 |");
+            Console.WriteLine("|                   - By Sebi und Nils -                    |");
+            Console.WriteLine("|---------------------------------------------------------- |");
+            Console.WriteLine("|                                                           |");
+            Console.WriteLine("|       @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @       |");
+            Console.WriteLine("|      [*] [*] [*] [*] [*] [*] [*] [*] [*] [*] [*] [*]      |");
+            Console.WriteLine("|      \\_/ \\_/ \\_/ \\_/ \\_/ \\_/ \\_/ \\_/ \\_/ \\_/ \\_/ \\_/      |");
+            Console.WriteLine("|                                                           |");
+            Console.WriteLine("|       ###           ###           ###           ###       |");
+            Console.WriteLine("|      #####         #####         #####         #####      |");
+            Console.WriteLine("|                                                           |");
+            Console.WriteLine("|                                                           |");
+            Console.WriteLine("|                            /\\                             |");
+            Console.WriteLine("|                           /  \\                            |");
+            Console.WriteLine("|                          | || |                           |");
+            Console.WriteLine("|                          | || |                           |");
+            Console.WriteLine("|                         /|_||_|\\                          |");
+            Console.WriteLine("|                        /_|_||_|_\\                         |");
+            Console.WriteLine("|                       |__________|                        |");
+            Console.WriteLine("|                         |  ||  |                          |");
+            Console.WriteLine("|                         |__||__|                          |");
+            Console.WriteLine("|                           /__\\                            |");
+            Console.WriteLine("|                                                           |");
+            Console.WriteLine("|                                                           |");
+            Console.WriteLine("|      [Enter] START     [C] Scoreboard     [Q] QUIT        |");
+            Console.WriteLine("+===========================================================+");
+            while (gamescreen == true)
+            {
+                if (Console.ReadKey(true).Key == ConsoleKey.Enter)
+                {
+                    gamescreen = false;
+                }
+            }
+            gamescreen = true;
+            menu = false;
             Console.Clear();
         }
     }
