@@ -52,6 +52,11 @@
                     ShowStartMenu();
                 }
 
+                Update();   // Spielerposition aktualisieren
+                Render();   // Spielfeld neu zeichnen
+                Thread.Sleep(250); // Spieltempo regulieren (250 ms)
+
+                if (score == 160) { gewonnen = true; }
                 if (gewonnen == true)
                 {
                     score = 0;
@@ -73,12 +78,6 @@
                         playagain = false;
                     }
                 }
-
-                Update();   // Spielerposition aktualisieren
-                Render();   // Spielfeld neu zeichnen
-                Thread.Sleep(250); // Spieltempo regulieren (250 ms)
-
-                if (score == 160) { gewonnen = true; }
             }
             inputThread.Join();
         }
@@ -255,7 +254,7 @@
             Console.Clear();
             Console.WriteLine("+===========================================================+");
             Console.WriteLine("|               S P A C E   I N V A D E R S                 |");
-            Console.WriteLine("|                   - By Sebi und Nils -                    |");
+            Console.WriteLine("|                  - Von Sebi und Nils -                    |");
             Console.WriteLine("|---------------------------------------------------------- |");
             Console.WriteLine("|                                                           |");
             Console.WriteLine("|       @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @       |");
@@ -278,11 +277,16 @@
             Console.WriteLine("|                           /__\\                            |");
             Console.WriteLine("|                                                           |");
             Console.WriteLine("|                                                           |");
-            Console.WriteLine("|      [Enter] START     [C] Scoreboard     [Q] QUIT        |");
+            Console.WriteLine("|     [Enter] START     [M] Scoreboard     [Esc] QUIT       |");
             Console.WriteLine("+===========================================================+");
             while (gamescreen == true)
             {
                 if (Console.ReadKey(true).Key == ConsoleKey.Enter)
+                {
+                    gamescreen = false;
+                }
+
+                if (Console.ReadKey(true).Key == ConsoleKey.Escape)
                 {
                     gamescreen = false;
                 }
