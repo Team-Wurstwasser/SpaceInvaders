@@ -31,7 +31,6 @@
         static bool gewonnen = false;
         static bool verloren = false;
         static bool gamescreen = true;
-        static bool playagain = false;
         static bool menu = false;
 
         static void Main()
@@ -61,24 +60,15 @@
                 {
                     score = 0;
                     ShowWinningScreen();
-                    if (playagain == true)
-                    {
-                        InitialisiereSpiel();
-                        playagain = false;
-                    }
                 }
 
                 if (verloren == true)
                 {
                     score = 0;
                     ShowGameOverScreen();
-                    if (playagain == true)
-                    {
-                        InitialisiereSpiel();
-                        playagain = false;
-                    }
                 }
             }
+            Console.Clear();
             inputThread.Join();
         }
 
@@ -202,17 +192,10 @@
             Console.WriteLine("======================");
             Console.WriteLine("       GAME OVER      ");
             Console.WriteLine("======================");
-            Console.WriteLine("Drücke Enter um neuzustarten oder esc um zum hauptmenü zurückzukehren");
+            Console.WriteLine("Drücke Enter um zum hauptmenü zurückzukehren");
             while (gamescreen == true)
             {
                 if (Console.ReadKey(true).Key == ConsoleKey.Enter)
-                {
-                    verloren = false;
-                    gamescreen = false;
-                    playagain = true;
-                }
-
-                if (Console.ReadKey(true).Key == ConsoleKey.Escape)
                 {
                     verloren = false;
                     gamescreen = false;
@@ -229,17 +212,10 @@
             Console.WriteLine("======================");
             Console.WriteLine("    Spiel gewonnen    ");
             Console.WriteLine("======================");
-            Console.WriteLine("Drücke Enter um neuzustarten oder esc um zum hauptmenü zurückzukehren");
+            Console.WriteLine("Drücke Enter um zum hauptmenü zurückzukehren");
             while (gamescreen == true)
             {
                 if (Console.ReadKey(true).Key == ConsoleKey.Enter)
-                {
-                    gewonnen = false;
-                    gamescreen = false;
-                    playagain = true;
-                }
-
-                if (Console.ReadKey(true).Key == ConsoleKey.Escape)
                 {
                     gewonnen = false;
                     gamescreen = false;
@@ -271,7 +247,7 @@
             Console.WriteLine("|                          | || |                           |");
             Console.WriteLine("|                         /|_||_|\\                          |");
             Console.WriteLine("|                        /_|_||_|_\\                         |");
-            Console.WriteLine("|                        |__________|                        |");
+            Console.WriteLine("|                       |__________|                        |");
             Console.WriteLine("|                         |  ||  |                          |");
             Console.WriteLine("|                         |__||__|                          |");
             Console.WriteLine("|                           /__\\                            |");
@@ -289,6 +265,7 @@
                 if (Console.ReadKey(true).Key == ConsoleKey.Escape)
                 {
                     gamescreen = false;
+                    spiel = false;
                 }
             }
             gamescreen = true;
