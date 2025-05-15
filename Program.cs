@@ -271,7 +271,7 @@
             Console.WriteLine("|                          | || |                           |");
             Console.WriteLine("|                         /|_||_|\\                          |");
             Console.WriteLine("|                        /_|_||_|_\\                         |");
-            Console.WriteLine("|                       |__________|                        |");
+            Console.WriteLine("|                        |__________|                        |");
             Console.WriteLine("|                         |  ||  |                          |");
             Console.WriteLine("|                         |__||__|                          |");
             Console.WriteLine("|                           /__\\                            |");
