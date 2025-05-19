@@ -7,18 +7,10 @@
 
     class Program
     {
-        // Spielstatus
-        static bool spiel = true;
-
-        // Spielfeldgröße (Breite x Höhe)
+        // Spielfeld
         static int weite = 40;
         static int hoehe = 20;
-
-        // Spielfeld Array
         static char[,] grid = new char[hoehe, weite];
-
-        //inputspeicher
-        static int inputX;
 
         //spieler
         static char player = 'A';
@@ -26,12 +18,16 @@
         static int playerY = 16;
 
         //sonstige werte
+        static bool spiel = true;
         static bool schuss = false;
-        static int score = 0;
         static bool gewonnen = false;
         static bool verloren = false;
         static bool gamescreen = true;
         static bool menu = false;
+        static int inputX;
+        static int score = 0;
+        static int gegnerpos = 0;
+        static int gegnerbewegung = 0;
 
         static void Main()
         {
@@ -88,6 +84,7 @@
             }
             inputX = 0;
 
+
             //schießen
             if (schuss == true && (grid[playerY -1, playerX] == ' ') && (grid[playerY - 2, playerX] == ' '))
             {
@@ -116,6 +113,10 @@
                     }
                 }
             }
+
+
+            // gegener bewegen
+
         }
         static void Render()
         {
