@@ -26,8 +26,7 @@
         static bool menu = false;
         static int inputX;
         static int score = 0;
-        static int gegnerpos = 0;
-        static int gegnerbewegung = 0;
+        static bool gegnerbewegung = false; // false == negativ
 
         static void Main()
         {
@@ -114,13 +113,48 @@
                 }
             }
 
+            if (gegnerbewegung == false)
+            {
+                // gegener negativ bewegen
+                if (grid[3, 1] == ' ' && grid[4, 1] == ' ' && grid[5, 1] == ' ' && grid[6, 1] == ' ' && grid[7, 1] == ' ')
+                {
+                    for (int reihe = 0; reihe < grid.GetLength(0); reihe++)
+                    {
+                        for (int symbol = 0; symbol < grid.GetLength(1); symbol++)
+                        {
+                            if (grid[reihe, symbol] == '*' && grid[reihe, symbol - 1] == ' ')
+                            {
+                                grid[reihe, symbol - 1] = '*';
+                                grid[reihe, symbol] = ' ';
+                            }
+                        }
+                    }
+                }
+                else gegnerbewegung = true;
+            }
 
-            // gegener bewegen
-
+            else if (gegnerbewegung == true)
+            {
+                //gegner positiv bewegen
+                if (grid[3, 38] == ' ' && grid[4, 38] == ' ' && grid[5, 38] == ' ' && grid[6, 38] == ' ' && grid[7, 38] == ' ')
+                {
+                    for (int reihe = 0; reihe < grid.GetLength(0); reihe++)
+                    {
+                        for (int symbol = grid.GetLength(1) -1; symbol > 0; symbol--)
+                        {
+                            if (grid[reihe, symbol] == '*' && grid[reihe, symbol + 1] == ' ')
+                            {
+                                grid[reihe, symbol + 1] = '*';
+                                grid[reihe, symbol] = ' ';
+                            }
+                        }
+                    }
+                }
+                else gegnerbewegung = false;
+            }
         }
         static void Render()
         {
-            // Cursor zurücksetzen "übermahlt" letztes Frame
             Console.SetCursorPosition(0, 0);
             for (int reihe = 0; reihe < grid.GetLength(0); reihe++)
             {
@@ -128,7 +162,7 @@
                 {
                     Console.Write(grid[reihe, symbol]);
                 }
-                Console.WriteLine(); // Neue Zeile nach jeder Reihe
+                Console.WriteLine();
             }
         }
         static void ReadInput()
@@ -261,6 +295,7 @@
                 if (Console.ReadKey(true).Key == ConsoleKey.Enter)
                 {
                     gamescreen = false;
+                    InitialisiereSpiel();
                 }
 
                 if (Console.ReadKey(true).Key == ConsoleKey.Escape)
