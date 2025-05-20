@@ -34,7 +34,7 @@
             Console.CursorVisible = false;
             Thread inputThread = new Thread(ReadInput);
             inputThread.Start();
-            ShowStartMenu();
+            ShowMenu();
             InitialisiereSpiel();
             Render();
             Thread.Sleep(10);
@@ -52,12 +52,17 @@
                         }
                     }
                 }
+
+                if (menu == true)
+                {
+                    ShowMenu();
+                }
                 if (wintest == 0) gewonnen = true;
                 wintest = 0;
 
                 Update();   // Spielerposition aktualisieren
                 Render();   // Spielfeld neu zeichnen
-                Thread.Sleep(25); // Spieltempo regulieren (250 ms)
+                Thread.Sleep(250); // Spieltempo regulieren (250 ms)
 
                 if (gewonnen == true)
                 {
@@ -270,7 +275,7 @@
             gamescreen = true;
             Console.Clear();
         }
-        static void ShowStartMenu()
+        static void ShowMenu()
         {
             Console.Clear();
             Console.WriteLine("+===========================================================+");
