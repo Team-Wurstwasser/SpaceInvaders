@@ -24,9 +24,10 @@
         static bool verloren = false;
         static bool gamescreen = true;
         static bool menu = false;
-        static int inputX;
-        static int score = 0;
         static bool gegnerbewegung = false; // false == negativ
+        static int inputX;
+        static int wintest = 0;
+        static int gegneranzahl = 75; // max 160
 
         static void Main()
         {
@@ -41,25 +42,30 @@
             // Game Loop 
             while (spiel)
             {
-                if (menu == true)
+                for (int reihe = 0; reihe < grid.GetLength(0); reihe++)
                 {
-                    ShowStartMenu();
+                    for (int symbol = 0; symbol < grid.GetLength(1); symbol++)
+                    {
+                        if (grid[reihe, symbol] == '*')
+                        {
+                            wintest ++;
+                        }
+                    }
                 }
+                if (wintest == 0) gewonnen = true;
+                wintest = 0;
 
                 Update();   // Spielerposition aktualisieren
                 Render();   // Spielfeld neu zeichnen
-                Thread.Sleep(250); // Spieltempo regulieren (250 ms)
+                Thread.Sleep(25); // Spieltempo regulieren (250 ms)
 
-                if (score == 160) { gewonnen = true; }
                 if (gewonnen == true)
                 {
-                    score = 0;
                     ShowWinningScreen();
                 }
 
                 if (verloren == true)
                 {
-                    score = 0;
                     ShowGameOverScreen();
                 }
             }
@@ -104,7 +110,6 @@
                     {
                         grid[reihe - 1, symbol] = ' ';
                         grid[reihe, symbol] = ' ';
-                        score++;
                     }
                     else if (grid[reihe, symbol] == '|' && grid[reihe - 1, symbol] == '\u2588')
                     {
@@ -113,16 +118,17 @@
                 }
             }
 
+            // gegnerbewegung
             if (gegnerbewegung == false)
             {
-                // gegener negativ bewegen
-                if (grid[3, 1] == ' ' && grid[4, 1] == ' ' && grid[5, 1] == ' ' && grid[6, 1] == ' ' && grid[7, 1] == ' ')
+                //negativ bewegen
+                if (grid[3, 1] != '*' && grid[4, 1] != '*' && grid[5, 1] != '*' && grid[6, 1] != '*' && grid[7, 1] != '*')
                 {
                     for (int reihe = 0; reihe < grid.GetLength(0); reihe++)
                     {
                         for (int symbol = 0; symbol < grid.GetLength(1); symbol++)
                         {
-                            if (grid[reihe, symbol] == '*' && grid[reihe, symbol - 1] == ' ')
+                            if (grid[reihe, symbol] == '*')
                             {
                                 grid[reihe, symbol - 1] = '*';
                                 grid[reihe, symbol] = ' ';
@@ -135,14 +141,14 @@
 
             else if (gegnerbewegung == true)
             {
-                //gegner positiv bewegen
-                if (grid[3, 38] == ' ' && grid[4, 38] == ' ' && grid[5, 38] == ' ' && grid[6, 38] == ' ' && grid[7, 38] == ' ')
+                //positiv bewegen
+                if (grid[3, 38] != '*' && grid[4, 38] != '*' && grid[5, 38] == ' ' && grid[6, 38] == ' ' && grid[7, 38] == ' ')
                 {
                     for (int reihe = 0; reihe < grid.GetLength(0); reihe++)
                     {
                         for (int symbol = grid.GetLength(1) -1; symbol > 0; symbol--)
                         {
-                            if (grid[reihe, symbol] == '*' && grid[reihe, symbol + 1] == ' ')
+                            if (grid[reihe, symbol] == '*')
                             {
                                 grid[reihe, symbol + 1] = '*';
                                 grid[reihe, symbol] = ' ';
@@ -193,6 +199,8 @@
 
         static void InitialisiereSpiel()
         {
+            Random rand = new Random();
+
             Console.SetCursorPosition(0, 0);
             for (int reihe = 0; reihe < grid.GetLength(0); reihe++)
             {
@@ -208,12 +216,14 @@
                     {
                         grid[reihe, symbol] = ' ';
                     }
-
-                    if (reihe > 2 && reihe < 8 && symbol > 3 && symbol < 36)
-                    {
-                        grid[reihe, symbol] = '*';
-                    }
                 }
+            }
+
+            for (int k = 0; k < gegneranzahl; k++)
+            {
+                int reihee = rand.Next(3, 8);
+                int spaltee = rand.Next(4, 36);
+                grid[reihee, spaltee] = '*';
             }
 
             // Spieler platzieren
