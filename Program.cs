@@ -31,6 +31,7 @@
 
         static void Main()
         {
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
             Console.CursorVisible = false;
             Thread inputThread = new Thread(ReadInput);
             inputThread.Start();
@@ -195,6 +196,7 @@
                             verloren = true;
                             break;
                         case ConsoleKey.UpArrow:
+                        case ConsoleKey.Spacebar:
                             schuss = true;
                             break;
                     }
