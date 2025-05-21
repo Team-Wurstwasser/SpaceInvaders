@@ -104,22 +104,22 @@
             }
             schuss = false;
 
-            for (int reihe = 0; reihe < grid.GetLength(0); reihe++)
+            for (int reihe = 1; reihe < hoehe - 1; reihe++)
             {
-                for (int symbol = 0; symbol < grid.GetLength(1); symbol++)
+                for (int symbol = 1; symbol < weite - 1; symbol++)
                 {
-                    if (grid[reihe, symbol]== '|' && grid[reihe - 1, symbol] == '*')
+                    if (grid[reihe, symbol] == '|' && grid[reihe - 1, symbol] == '*')
                     {
                         grid[reihe - 1, symbol] = ' ';
                         grid[reihe, symbol] = ' ';
                         score++;
                     }
-                    else if (grid[reihe, symbol] == '|' && grid[reihe -1, symbol] == ' ')
+                    else if (grid[reihe, symbol] == '|' && grid[reihe - 1, symbol] == ' ')
                     {
-                        grid[reihe-1, symbol] = '|';
+                        grid[reihe - 1, symbol] = '|';
                         grid[reihe, symbol] = ' ';
-                    } 
-                    else if (grid[reihe, symbol] == '|' && grid[reihe - 1, symbol] == '\u2588')
+                    }
+                    else if (grid[reihe, symbol] == '|' && grid[reihe - 1, symbol] != ' ')
                     {
                         grid[reihe, symbol] = ' ';
                     }
@@ -229,11 +229,16 @@
                 }
             }
 
-            for (int k = 0; k < gegneranzahl; k++)
+            for (int k = 1; k <= gegneranzahl;)
             {
                 int reihee = rand.Next(3, 8);
                 int spaltee = rand.Next(4, 36);
-                grid[reihee, spaltee] = '*';
+
+                if (grid[reihee, spaltee] != '*')
+                {
+                    grid[reihee, spaltee] = '*';
+                    k++; 
+                }
             }
 
             // Spieler platzieren
