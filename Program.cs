@@ -27,7 +27,8 @@
         static bool gegnerbewegung = false; // false == negativ
         static int inputX;
         static int wintest = 0;
-        static int gegneranzahl = 75; // max 160
+        static int gegneranzahl = 30; // max 160
+        static int score;
 
         static void Main()
         {
@@ -107,16 +108,17 @@
             {
                 for (int symbol = 0; symbol < grid.GetLength(1); symbol++)
                 {
-                    if (grid[reihe, symbol]== '|' && grid[reihe - 1, symbol] == ' ')
-                    {
-                        grid[reihe - 1, symbol] = '|';
-                        grid[reihe, symbol] = ' ';
-                    }
-                    else if (grid[reihe, symbol] == '|' && grid[reihe - 1, symbol] == '*')
+                    if (grid[reihe, symbol]== '|' && grid[reihe - 1, symbol] == '*')
                     {
                         grid[reihe - 1, symbol] = ' ';
                         grid[reihe, symbol] = ' ';
+                        score++;
                     }
+                    else if (grid[reihe, symbol] == '|' && grid[reihe -1, symbol] == ' ')
+                    {
+                        grid[reihe-1, symbol] = '|';
+                        grid[reihe, symbol] = ' ';
+                    } 
                     else if (grid[reihe, symbol] == '|' && grid[reihe - 1, symbol] == '\u2588')
                     {
                         grid[reihe, symbol] = ' ';
@@ -206,6 +208,7 @@
 
         static void InitialisiereSpiel()
         {
+            score = 0;
             Random rand = new Random();
 
             Console.SetCursorPosition(0, 0);
@@ -264,6 +267,7 @@
             Console.WriteLine("======================");
             Console.WriteLine("    Spiel gewonnen    ");
             Console.WriteLine("======================");
+            Console.WriteLine(score);
             Console.WriteLine("Drücke Enter um zum hauptmenü zurückzukehren");
             while (gamescreen == true)
             {
