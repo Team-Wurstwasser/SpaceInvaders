@@ -126,10 +126,10 @@
                 }
             }
 
-            // gegnerbewegung
+            // Gegnerbewegung
             if (gegnerbewegung == false)
             {
-                //negativ bewegen
+                // Bewegung nach links
                 if (grid[3, 1] != '*' && grid[4, 1] != '*' && grid[5, 1] != '*' && grid[6, 1] != '*' && grid[7, 1] != '*')
                 {
                     for (int reihe = 0; reihe < grid.GetLength(0); reihe++)
@@ -138,28 +138,45 @@
                         {
                             if (grid[reihe, symbol] == '*')
                             {
-                                grid[reihe, symbol - 1] = '*';
-                                grid[reihe, symbol] = ' ';
+                                if (grid[reihe, symbol - 1] == '|')
+                                {
+                                    grid[reihe, symbol - 1] = ' ';
+                                    grid[reihe, symbol] = ' ';
+                                    score++;
+                                }
+                                else
+                                {
+                                    grid[reihe, symbol - 1] = '*';
+                                    grid[reihe, symbol] = ' ';
+                                }
                             }
                         }
                     }
                 }
                 else gegnerbewegung = true;
             }
-
             else if (gegnerbewegung == true)
             {
-                //positiv bewegen
-                if (grid[3, 38] != '*' && grid[4, 38] != '*' && grid[5, 38] == ' ' && grid[6, 38] == ' ' && grid[7, 38] == ' ')
+                // Bewegung nach rechts
+                if (grid[3, 38] != '*' && grid[4, 38] != '*' && grid[5, 38] != '*' && grid[6, 38] != '*' && grid[7, 38] != '*')
                 {
                     for (int reihe = 0; reihe < grid.GetLength(0); reihe++)
                     {
-                        for (int symbol = grid.GetLength(1) -1; symbol > 0; symbol--)
+                        for (int symbol = grid.GetLength(1) - 1; symbol > 0; symbol--)
                         {
                             if (grid[reihe, symbol] == '*')
                             {
-                                grid[reihe, symbol + 1] = '*';
-                                grid[reihe, symbol] = ' ';
+                                if (grid[reihe, symbol + 1] == '|')
+                                {
+                                    grid[reihe, symbol + 1] = ' ';
+                                    grid[reihe, symbol] = ' ';
+                                    score++;
+                                }
+                                else
+                                {
+                                    grid[reihe, symbol + 1] = '*';
+                                    grid[reihe, symbol] = ' ';
+                                }
                             }
                         }
                     }
@@ -167,6 +184,7 @@
                 else gegnerbewegung = false;
             }
         }
+
         static void Render()
         {
             Console.SetCursorPosition(0, 0);
