@@ -104,9 +104,9 @@
             }
             schuss = false;
 
-            for (int reihe = 1; reihe < hoehe - 1; reihe++)
+            for (int reihe = 1; reihe < grid.GetLength(0) - 1; reihe++)
             {
-                for (int symbol = 1; symbol < weite - 1; symbol++)
+                for (int symbol = 1; symbol < grid.GetLength(1) - 1; symbol++)
                 {
                     if (grid[reihe, symbol] == '|' && grid[reihe - 1, symbol] == '*')
                     {
