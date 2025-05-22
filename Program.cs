@@ -26,7 +26,6 @@
         static bool menu = false;
         static bool gegnerbewegung = false; // false == negativ
         static int inputX;
-        static int wintest = 0;
         static int gegneranzahl = 30; // max 160
         static int score;
 
@@ -44,27 +43,18 @@
             // Game Loop 
             while (spiel)
             {
-                for (int reihe = 0; reihe < grid.GetLength(0); reihe++)
-                {
-                    for (int symbol = 0; symbol < grid.GetLength(1); symbol++)
-                    {
-                        if (grid[reihe, symbol] == '*')
-                        {
-                            wintest ++;
-                        }
-                    }
-                }
 
                 if (menu == true)
                 {
                     ShowMenu();
                 }
-                if (wintest == 0) gewonnen = true;
-                wintest = 0;
+
+                if (score == gegneranzahl)
+                    gewonnen = true;
 
                 Update();   // Spielerposition aktualisieren
                 Render();   // Spielfeld neu zeichnen
-                Thread.Sleep(250); // Spieltempo regulieren (250 ms)
+                Thread.Sleep(50); // Spieltempo regulieren (250 ms)
 
                 if (gewonnen == true)
                 {
