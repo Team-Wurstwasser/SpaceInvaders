@@ -172,7 +172,7 @@
                 else if (gegnerbewegung == true)
                 {
                     // Bewegung nach rechts
-                    if (grid[3, 38] != '*' && grid[4, 38] != '*' && grid[5, 38] != '*' && grid[6, 38] != '*' && grid[7, 38] != '*')
+                    if (grid[3, 59] != '*' && grid[4, 59] != '*' && grid[5, 59] != '*' && grid[6, 59] != '*' && grid[7, 59] != '*')
                     {
                         for (int reihe = 0; reihe < grid.GetLength(0); reihe++)
                         {
