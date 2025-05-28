@@ -1,4 +1,4 @@
-﻿namespace Spaceinvaders
+namespace Spaceinvaders
 {
     using System;
     using System.Threading;
@@ -91,7 +91,25 @@
                         break;
                     }
                 }
-            } 
+            }
+
+            for (int reihe = 1; reihe < grid.GetLength(0) - 1; reihe++)
+            {
+                for (int symbol = 1; symbol < grid.GetLength(1) - 1; symbol++)
+                {
+                    if (grid[reihe, symbol] == 'v' && grid[reihe + 1, symbol] == ' ')
+                    {
+                        grid[reihe + 1, symbol] = 'v';
+                        grid[reihe, symbol] = ' ';
+                    }
+                    else if (grid[reihe, symbol] == 'v' && grid[reihe + 1, symbol] != ' ')
+                    {
+                        grid[reihe, symbol] = ' ';
+                    }
+                }
+            }
+
+            //neue spielerposition erstelle 
             
             //spielerbewegung
             int newPlayerX = playerX + inputX;
