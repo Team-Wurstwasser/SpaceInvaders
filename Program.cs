@@ -8,14 +8,14 @@ namespace Spaceinvaders
     class Program
     {
         // Spielfeld
-        static int weite = 60;
+        static int weite = 61;
         static int hoehe = 30;
         static char[,] grid = new char[hoehe, weite];
 
         //spieler
         static char player = 'A';
-        static int playerX = 20;
-        static int playerY = 16;
+        static int playerX = 30;
+        static int playerY = 25;
 
         //sonstige werte
         static bool spiel = true;
@@ -190,7 +190,7 @@ namespace Spaceinvaders
                 else if (gegnerbewegung == true)
                 {
                     // Bewegung nach rechts
-                    if (grid[3, 58] != '*' && grid[4, 58] != '*' && grid[5, 58] != '*' && grid[6, 58] != '*' && grid[7, 58] != '*')
+                    if (grid[3, 59] != '*' && grid[4, 59] != '*' && grid[5, 59] != '*' && grid[6, 59] != '*' && grid[7, 59] != '*')
                     {
                         for (int reihe = 0; reihe < grid.GetLength(0); reihe++)
                         {
@@ -263,6 +263,7 @@ namespace Spaceinvaders
             score = 0;
             Random rand = new Random();
 
+            //spielrand spawn
             Console.SetCursorPosition(0, 0);
             for (int reihe = 0; reihe < grid.GetLength(0); reihe++)
             {
@@ -281,6 +282,7 @@ namespace Spaceinvaders
                 }
             }
 
+            //gegner spawn
             for (int k = 1; k <= gegneranzahl;)
             {
                 int reihee = rand.Next(3, 8);
