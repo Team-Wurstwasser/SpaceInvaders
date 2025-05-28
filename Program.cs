@@ -93,7 +93,7 @@
                 }
             } 
             
-            //neue spielerposition erstellen
+            //spielerbewegung
             int newPlayerX = playerX + inputX;
 
             if (grid[playerY, newPlayerX] == ' ')
@@ -119,7 +119,7 @@
             {
                 for (int symbol = 1; symbol < grid.GetLength(1) - 1; symbol++)
                 {
-                    if (grid[reihe, symbol] == '|' && grid[reihe - 1, symbol] == '*')
+                    if (grid[reihe, symbol] == '|' && grid[reihe - 1, symbol] == '*' || grid[reihe, symbol] == '|' && grid[reihe - 1, symbol] == 'v')
                     {
                         grid[reihe - 1, symbol] = ' ';
                         grid[reihe, symbol] = ' ';
@@ -137,10 +137,10 @@
                 }
             }
 
+            // Gegnerbewegung
             gegnerbewegungdelay++;
             if (gegnerbewegungdelay == 3)
             {
-                // Gegnerbewegung
                 if (gegnerbewegung == false)
                 {
                     // Bewegung nach links
@@ -172,7 +172,7 @@
                 else if (gegnerbewegung == true)
                 {
                     // Bewegung nach rechts
-                    if (grid[3, 59] != '*' && grid[4, 59] != '*' && grid[5, 59] != '*' && grid[6, 59] != '*' && grid[7, 59] != '*')
+                    if (grid[3, 58] != '*' && grid[4, 58] != '*' && grid[5, 58] != '*' && grid[6, 58] != '*' && grid[7, 58] != '*')
                     {
                         for (int reihe = 0; reihe < grid.GetLength(0); reihe++)
                         {
