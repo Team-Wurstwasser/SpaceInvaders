@@ -93,9 +93,9 @@ namespace Spaceinvaders
                 }
             }
 
-            for (int reihe = 1; reihe < grid.GetLength(0) - 1; reihe++)
+            for (int reihe = grid.GetLength(0) - 1; reihe >= 1; reihe--)
             {
-                for (int symbol = 1; symbol < grid.GetLength(1) - 1; symbol++)
+                for (int symbol = grid.GetLength(1) - 1; symbol >= 1; symbol--)
                 {
                     if (grid[reihe, symbol] == 'v' && grid[reihe + 1, symbol] == ' ')
                     {
