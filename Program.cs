@@ -8,8 +8,8 @@
     class Program
     {
         // Spielfeld
-        static int weite = 40;
-        static int hoehe = 20;
+        static int weite = 60;
+        static int hoehe = 30;
         static char[,] grid = new char[hoehe, weite];
 
         //spieler
