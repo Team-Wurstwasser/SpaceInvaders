@@ -286,7 +286,7 @@ namespace Spaceinvaders
             for (int k = 1; k <= gegneranzahl;)
             {
                 int reihee = rand.Next(3, 8);
-                int spaltee = rand.Next(4, 36);
+                int spaltee = rand.Next(4, 56);
 
                 if (grid[reihee, spaltee] != '*')
                 {
