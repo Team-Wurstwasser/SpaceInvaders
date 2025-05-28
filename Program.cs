@@ -72,6 +72,26 @@
 
         static void Update()
         {
+            Random rand = new();
+
+            for (int spalte = 0; spalte < grid.GetLength(1); spalte++)
+            {
+                for (int reihe = grid.GetLength(0) - 1; reihe >= 0; reihe--)
+                {
+                    if (grid[reihe, spalte] == '*')
+                    {
+                        if (reihe + 1 < grid.GetLength(0) && grid[reihe + 1, spalte] == ' ')
+                        {
+                            if (rand.NextDouble() < 0.02)
+                            {
+                                grid[reihe + 1, spalte] = 'v'; // feindlicher Schuss
+                            }
+                        }
+                        break;
+                    }
+                }
+            } 
+            
             //neue spielerposition erstellen
             int newPlayerX = playerX + inputX;
 
