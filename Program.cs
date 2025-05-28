@@ -25,6 +25,7 @@
         static bool gamescreen = true;
         static bool menu = false;
         static bool gegnerbewegung = false; // false == negativ
+        static int gegnerbewegungdelay = 0;
         static int inputX;
         static int gegneranzahl = 30; // max 160
         static int score;
@@ -88,7 +89,7 @@
 
 
             //schießen
-            if (schuss == true && (grid[playerY -1, playerX] == ' ') && (grid[playerY - 2, playerX] == ' '))
+            if (schuss == true && (grid[playerY -1, playerX] == ' ') && (grid[playerY - 2, playerX] == ' ') && (grid[playerY - 2, playerX -1] != '|') && (grid[playerY - 2, playerX +1] != '|'))
             {
                 grid[playerY - 1, playerX] = '|';
             }
@@ -116,62 +117,67 @@
                 }
             }
 
-            // Gegnerbewegung
-            if (gegnerbewegung == false)
+            gegnerbewegungdelay++;
+            if (gegnerbewegungdelay == 3)
             {
-                // Bewegung nach links
-                if (grid[3, 1] != '*' && grid[4, 1] != '*' && grid[5, 1] != '*' && grid[6, 1] != '*' && grid[7, 1] != '*')
+                // Gegnerbewegung
+                if (gegnerbewegung == false)
                 {
-                    for (int reihe = 0; reihe < grid.GetLength(0); reihe++)
+                    // Bewegung nach links
+                    if (grid[3, 1] != '*' && grid[4, 1] != '*' && grid[5, 1] != '*' && grid[6, 1] != '*' && grid[7, 1] != '*')
                     {
-                        for (int symbol = 0; symbol < grid.GetLength(1); symbol++)
+                        for (int reihe = 0; reihe < grid.GetLength(0); reihe++)
                         {
-                            if (grid[reihe, symbol] == '*')
+                            for (int symbol = 0; symbol < grid.GetLength(1); symbol++)
                             {
-                                if (grid[reihe, symbol - 1] == '|')
+                                if (grid[reihe, symbol] == '*')
                                 {
-                                    grid[reihe, symbol - 1] = ' ';
-                                    grid[reihe, symbol] = ' ';
-                                    score++;
-                                }
-                                else
-                                {
-                                    grid[reihe, symbol - 1] = '*';
-                                    grid[reihe, symbol] = ' ';
+                                    if (grid[reihe, symbol - 1] == '|')
+                                    {
+                                        grid[reihe, symbol - 1] = ' ';
+                                        grid[reihe, symbol] = ' ';
+                                        score++;
+                                    }
+                                    else
+                                    {
+                                        grid[reihe, symbol - 1] = '*';
+                                        grid[reihe, symbol] = ' ';
+                                    }
                                 }
                             }
                         }
                     }
+                    else gegnerbewegung = true;
                 }
-                else gegnerbewegung = true;
-            }
-            else if (gegnerbewegung == true)
-            {
-                // Bewegung nach rechts
-                if (grid[3, 38] != '*' && grid[4, 38] != '*' && grid[5, 38] != '*' && grid[6, 38] != '*' && grid[7, 38] != '*')
+                else if (gegnerbewegung == true)
                 {
-                    for (int reihe = 0; reihe < grid.GetLength(0); reihe++)
+                    // Bewegung nach rechts
+                    if (grid[3, 38] != '*' && grid[4, 38] != '*' && grid[5, 38] != '*' && grid[6, 38] != '*' && grid[7, 38] != '*')
                     {
-                        for (int symbol = grid.GetLength(1) - 1; symbol > 0; symbol--)
+                        for (int reihe = 0; reihe < grid.GetLength(0); reihe++)
                         {
-                            if (grid[reihe, symbol] == '*')
+                            for (int symbol = grid.GetLength(1) - 1; symbol > 0; symbol--)
                             {
-                                if (grid[reihe, symbol + 1] == '|')
+                                if (grid[reihe, symbol] == '*')
                                 {
-                                    grid[reihe, symbol + 1] = ' ';
-                                    grid[reihe, symbol] = ' ';
-                                    score++;
-                                }
-                                else
-                                {
-                                    grid[reihe, symbol + 1] = '*';
-                                    grid[reihe, symbol] = ' ';
+                                    if (grid[reihe, symbol + 1] == '|')
+                                    {
+                                        grid[reihe, symbol + 1] = ' ';
+                                        grid[reihe, symbol] = ' ';
+                                        score++;
+                                    }
+                                    else
+                                    {
+                                        grid[reihe, symbol + 1] = '*';
+                                        grid[reihe, symbol] = ' ';
+                                    }
                                 }
                             }
                         }
                     }
+                    else gegnerbewegung = false;
                 }
-                else gegnerbewegung = false;
+                gegnerbewegungdelay = 0;
             }
         }
 
