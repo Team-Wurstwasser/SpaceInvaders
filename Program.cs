@@ -8,13 +8,16 @@ namespace Spaceinvaders
     class Program
     {
         // Spielfeld
-        static int weite = 61;
+        static int weite = 57;
         static int hoehe = 30;
         static char[,] grid = new char[hoehe, weite];
+        static int schutzHoehe = 3;
+        static int schutzBreite = 5;
+        static int[] schutzX = { 8, 20, 32, 44 };
 
         //spieler
         static char player = 'A';
-        static int playerX = 30;
+        static int playerX = 28;
         static int playerY = 25;
 
         //sonstige werte
@@ -137,11 +140,16 @@ namespace Spaceinvaders
             {
                 for (int symbol = 1; symbol < grid.GetLength(1) - 1; symbol++)
                 {
-                    if (grid[reihe, symbol] == '|' && grid[reihe - 1, symbol] == '*' || grid[reihe, symbol] == '|' && grid[reihe - 1, symbol] == 'v')
+                    if (grid[reihe, symbol] == '|' && grid[reihe - 1, symbol] == '*')
                     {
                         grid[reihe - 1, symbol] = ' ';
                         grid[reihe, symbol] = ' ';
                         score++;
+                    }
+                    if (grid[reihe, symbol] == '|' && grid[reihe - 1, symbol] == 'v')
+                    {
+                        grid[reihe - 1, symbol] = ' ';
+                        grid[reihe, symbol] = ' ';
                     }
                     else if (grid[reihe, symbol] == '|' && grid[reihe - 1, symbol] == ' ')
                     {
@@ -190,7 +198,7 @@ namespace Spaceinvaders
                 else if (gegnerbewegung == true)
                 {
                     // Bewegung nach rechts
-                    if (grid[3, 59] != '*' && grid[4, 59] != '*' && grid[5, 59] != '*' && grid[6, 59] != '*' && grid[7, 59] != '*')
+                    if (grid[3, 55] != '*' && grid[4, 55] != '*' && grid[5, 55] != '*' && grid[6, 55] != '*' && grid[7, 55] != '*')
                     {
                         for (int reihe = 0; reihe < grid.GetLength(0); reihe++)
                         {
@@ -230,6 +238,7 @@ namespace Spaceinvaders
                 }
                 Console.WriteLine();
             }
+            Console.WriteLine(score);
         }
         static void ReadInput()
         {
@@ -260,6 +269,10 @@ namespace Spaceinvaders
 
         static void InitialisiereSpiel()
         {
+            //Spieler zurücksetzen
+            playerX = 28;
+            playerY = 25;
+
             score = 0;
             Random rand = new Random();
 
@@ -285,18 +298,34 @@ namespace Spaceinvaders
             //gegner spawn
             for (int k = 1; k <= gegneranzahl;)
             {
-                int reihee = rand.Next(3, 8);
-                int spaltee = rand.Next(4, 56);
+                int reihe = rand.Next(3, 8);
+                int symbol = rand.Next(4, 52);
 
-                if (grid[reihee, spaltee] != '*')
+                if (grid[reihe, symbol] != '*')
                 {
-                    grid[reihee, spaltee] = '*';
+                    grid[reihe, symbol] = '*';
                     k++; 
                 }
             }
 
             // Spieler platzieren
             grid[playerY, playerX] = player;
+
+            //Schutz plazieren
+            int schutzY = playerY - 3;
+
+            foreach (int startX in schutzX)
+            {
+                for (int reihe = 0; reihe < schutzHoehe; reihe++)
+                {
+                    for (int symbol = 0; symbol < schutzBreite; symbol++)
+                    {
+                        int x = startX + symbol;
+                        int y = schutzY - reihe;
+                        grid[y, x] = '#';
+                    }
+                }
+            }
 
         }
 
