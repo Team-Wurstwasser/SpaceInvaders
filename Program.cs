@@ -24,14 +24,14 @@ namespace Spaceinvaders
         //sonstige werte
         static bool spiel = true;
         static bool schuss = false;
-        static bool gewonnen = false;
-        static bool verloren = false;
+        static bool gameover;
         static bool gamescreen = true;
         static bool menu = false;
         static bool gegnerbewegung = false; // false == negativ
         static int gegnerbewegungdelay = 0;
         static int inputX;
-        static int gegneranzahl = 30; // max 160
+        static int gegneranzahl = 3; // max 160
+        static int gegner;
         static int score;
 
         static void Main()
@@ -54,23 +54,18 @@ namespace Spaceinvaders
                     ShowMenu();
                 }
 
-                if (score == gegneranzahl)
-                    gewonnen = true;
                 if (leben == 0)
-                    verloren = true;
+                    gameover = true;
+                if (leben > 0 && gegner == 0)
+                    InitialisiereSpiel();
 
                 Update();   // Spielerposition aktualisieren
                 Render();   // Spielfeld neu zeichnen
                 Thread.Sleep(50); // Spieltempo regulieren (250 ms)
 
-                if (gewonnen == true)
+                if (gameover == true)
                 {
-                    ShowWinningScreen();
-                }
-
-                if (verloren == true)
-                {
-                    ShowGameOverScreen();
+                    ShowGameoverScreen();
                 }
             }
             Console.Clear();
@@ -157,7 +152,8 @@ namespace Spaceinvaders
                     {
                         grid[reihe - 1, symbol] = ' ';
                         grid[reihe, symbol] = ' ';
-                        score++;
+                        gegner--;
+                        score += 10;
                     }
                     if (grid[reihe, symbol] == '|' && grid[reihe - 1, symbol] == 'v')
                     {
@@ -201,7 +197,8 @@ namespace Spaceinvaders
                                     {
                                         grid[reihe, symbol - 1] = ' ';
                                         grid[reihe, symbol] = ' ';
-                                        score++;
+                                        gegner--;
+                                        score += 10;
                                     }
                                     else
                                     {
@@ -229,7 +226,8 @@ namespace Spaceinvaders
                                     {
                                         grid[reihe, symbol + 1] = ' ';
                                         grid[reihe, symbol] = ' ';
-                                        score++;
+                                        gegner--;
+                                        score += 10;
                                     }
                                     else
                                     {
@@ -257,6 +255,7 @@ namespace Spaceinvaders
                 }
                 Console.WriteLine();
             }
+            Console.WriteLine(gegner);
             Console.WriteLine(score);
             Console.WriteLine(leben);
         }
@@ -276,7 +275,7 @@ namespace Spaceinvaders
                             inputX = -1;
                             break;
                         case ConsoleKey.Escape:
-                            verloren = true;
+                            gameover = true;
                             break;
                         case ConsoleKey.UpArrow:
                         case ConsoleKey.Spacebar:
@@ -293,8 +292,7 @@ namespace Spaceinvaders
             playerX = 28;
             playerY = 25;
 
-            leben = 3;
-            score = 0;
+            gegner = gegneranzahl;
             Random rand = new Random();
 
             //spielrand spawn
@@ -350,39 +348,18 @@ namespace Spaceinvaders
 
         }
 
-        static void ShowGameOverScreen()
+        static void ShowGameoverScreen()
         {
             Console.Clear();
             Console.WriteLine("======================");
-            Console.WriteLine("       GAME OVER      ");
-            Console.WriteLine("======================");
-            Console.WriteLine("Drücke Enter um zum hauptmenü zurückzukehren");
-            while (gamescreen == true)
-            {
-                if (Console.ReadKey(true).Key == ConsoleKey.Enter)
-                {
-                    verloren = false;
-                    gamescreen = false;
-                    menu = true;
-                }
-            }
-            gamescreen = true;
-            Console.Clear();
-        }
-
-        static void ShowWinningScreen()
-        {
-            Console.Clear();
-            Console.WriteLine("======================");
-            Console.WriteLine("    Spiel gewonnen    ");
+            Console.WriteLine("      Game  Over      ");
             Console.WriteLine("======================");
             Console.WriteLine(score);
-            Console.WriteLine("Drücke Enter um zum hauptmenü zurückzukehren");
+            Console.WriteLine("Drücke Enter um zum Hauptmenü zurückzukehren");
             while (gamescreen == true)
             {
                 if (Console.ReadKey(true).Key == ConsoleKey.Enter)
                 {
-                    gewonnen = false;
                     gamescreen = false;
                     menu = true;
                 }
@@ -393,38 +370,42 @@ namespace Spaceinvaders
         static void ShowMenu()
         {
             Console.Clear();
-            Console.WriteLine("+===========================================================+");
-            Console.WriteLine("|               S P A C E   I N V A D E R S                 |");
-            Console.WriteLine("|                  - Von Sebi und Nils -                    |");
-            Console.WriteLine("|---------------------------------------------------------- |");
-            Console.WriteLine("|                                                           |");
-            Console.WriteLine("|       @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @       |");
-            Console.WriteLine("|      [*] [*] [*] [*] [*] [*] [*] [*] [*] [*] [*] [*]      |");
-            Console.WriteLine("|      \\_/ \\_/ \\_/ \\_/ \\_/ \\_/ \\_/ \\_/ \\_/ \\_/ \\_/ \\_/      |");
-            Console.WriteLine("|                                                           |");
-            Console.WriteLine("|       ###           ###           ###           ###       |");
-            Console.WriteLine("|      #####         #####         #####         #####      |");
-            Console.WriteLine("|                                                           |");
-            Console.WriteLine("|                                                           |");
-            Console.WriteLine("|                            /\\                             |");
-            Console.WriteLine("|                           /  \\                            |");
-            Console.WriteLine("|                          | || |                           |");
-            Console.WriteLine("|                          | || |                           |");
-            Console.WriteLine("|                         /|_||_|\\                          |");
-            Console.WriteLine("|                        /_|_||_|_\\                         |");
-            Console.WriteLine("|                       |__________|                        |");
-            Console.WriteLine("|                         |  ||  |                          |");
-            Console.WriteLine("|                         |__||__|                          |");
-            Console.WriteLine("|                           /__\\                            |");
-            Console.WriteLine("|                                                           |");
-            Console.WriteLine("|                                                           |");
-            Console.WriteLine("|     [Enter] START     [M] Scoreboard     [Esc] QUIT       |");
-            Console.WriteLine("+===========================================================+");
+            Console.WriteLine(
+@"+===========================================================+ 
+|               S P A C E   I N V A D E R S                 |
+|                  - Von Sebi und Nils -                    |
+|-----------------------------------------------------------|
+|                                                           |
+|       @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @       |
+|      [*] [*] [*] [*] [*] [*] [*] [*] [*] [*] [*] [*]      |
+|      \_/ \_/ \_/ \_/ \_/ \_/ \_/ \_/ \_/ \_/ \_/ \_/      |
+|                                                           |
+|       ###           ###           ###           ###       |
+|      #####         #####         #####         #####      |
+|                                                           |
+|                                                           |
+|                            /\                             |
+|                           /  \                            |
+|                          | || |                           |
+|                          | || |                           |
+|                         /|_||_|\                          |
+|                        /_|_||_|_\                         |
+|                       |__________|                        |
+|                         |  ||  |                          |
+|                         |__||__|                          |
+|                           /__\                            |
+|                                                           |
+|                                                           |
+|     [Enter] START     [M] Scoreboard     [Esc] QUIT       |
++===========================================================+");
             while (gamescreen == true)
             {
                 if (Console.ReadKey(true).Key == ConsoleKey.Enter)
                 {
                     gamescreen = false;
+                    gameover = false;
+                    leben = 3;
+                    score = 0;
                     InitialisiereSpiel();
                 }
 
