@@ -17,8 +17,9 @@ namespace Spaceinvaders
 
         //spieler
         static char player = 'A';
-        static int playerX = 28;
-        static int playerY = 25;
+        static int playerX;
+        static int playerY;
+        static int leben;
 
         //sonstige werte
         static bool spiel = true;
@@ -55,6 +56,8 @@ namespace Spaceinvaders
 
                 if (score == gegneranzahl)
                     gewonnen = true;
+                if (leben == 0)
+                    verloren = true;
 
                 Update();   // Spielerposition aktualisieren
                 Render();   // Spielfeld neu zeichnen
@@ -105,6 +108,16 @@ namespace Spaceinvaders
                         grid[reihe + 1, symbol] = 'v';
                         grid[reihe, symbol] = ' ';
                     }
+                    else if (grid[reihe, symbol] == 'v' && grid[reihe + 1, symbol] == '#')
+                    {
+                        grid[reihe + 1, symbol] = ' ';
+                        grid[reihe, symbol] = ' ';
+                    }
+                    else if (grid[reihe, symbol] == 'v' && grid[reihe + 1, symbol] == 'A')
+                    {
+                        leben--;
+                        grid[reihe, symbol] = ' ';
+                    }
                     else if (grid[reihe, symbol] == 'v' && grid[reihe + 1, symbol] != ' ')
                     {
                         grid[reihe, symbol] = ' ';
@@ -151,6 +164,12 @@ namespace Spaceinvaders
                         grid[reihe - 1, symbol] = ' ';
                         grid[reihe, symbol] = ' ';
                     }
+                    else if (grid[reihe, symbol] == '|' && grid[reihe - 1, symbol] == '#')
+                    {
+                        grid[reihe - 1, symbol] = ' ';
+                        grid[reihe, symbol] = ' ';
+                    }
+
                     else if (grid[reihe, symbol] == '|' && grid[reihe - 1, symbol] == ' ')
                     {
                         grid[reihe - 1, symbol] = '|';
@@ -239,6 +258,7 @@ namespace Spaceinvaders
                 Console.WriteLine();
             }
             Console.WriteLine(score);
+            Console.WriteLine(leben);
         }
         static void ReadInput()
         {
@@ -273,6 +293,7 @@ namespace Spaceinvaders
             playerX = 28;
             playerY = 25;
 
+            leben = 3;
             score = 0;
             Random rand = new Random();
 
