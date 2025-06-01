@@ -30,7 +30,7 @@ namespace Spaceinvaders
         static bool gegnerbewegung = false; // false == negativ
         static int gegnerbewegungdelay = 0;
         static int inputX;
-        static int gegneranzahl = 3; // max 160
+        static int gegneranzahl = 50; // max 160
         static int gegner;
         static int score;
 
