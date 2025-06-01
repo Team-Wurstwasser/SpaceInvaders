@@ -8,15 +8,15 @@ namespace Spaceinvaders
     class Program
     {
         // Spielfeld
-        static int weite = 57;
-        static int hoehe = 30;
+        static readonly int weite = 57;
+        static readonly int hoehe = 30;
         static char[,] grid = new char[hoehe, weite];
-        static int schutzHoehe = 3;
-        static int schutzBreite = 5;
-        static int[] schutzX = { 8, 20, 32, 44 };
+        static readonly int schutzHoehe = 3;
+        static readonly int schutzBreite = 5;
+        static readonly int[] schutzX = { 8, 20, 32, 44 };
 
         //spieler
-        static char player = 'A';
+        static readonly char player = 'A';
         static int playerX;
         static int playerY;
         static int leben;
@@ -30,7 +30,7 @@ namespace Spaceinvaders
         static bool gegnerbewegung = false; // false == negativ
         static int gegnerbewegungdelay = 0;
         static int inputX;
-        static int gegneranzahl = 50; // max 160
+        static readonly int gegneranzahl = 50; // max 160
         static int gegner;
         static int score;
 
@@ -38,7 +38,7 @@ namespace Spaceinvaders
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
             Console.CursorVisible = false;
-            Thread inputThread = new Thread(ReadInput);
+            Thread inputThread = new(ReadInput);
             inputThread.Start();
             ShowMenu();
             InitialisiereSpiel();
@@ -255,9 +255,17 @@ namespace Spaceinvaders
                 }
                 Console.WriteLine();
             }
-            Console.WriteLine(gegner);
-            Console.WriteLine(score);
-            Console.WriteLine(leben);
+            // Lebensbalken anzeigen
+            Console.WriteLine();
+            Console.Write("Leben: ");
+            Console.ForegroundColor = ConsoleColor.Red;
+            string Lebensbalken = new string('♥', leben).PadRight(3, ' ');
+            Console.WriteLine(Lebensbalken);
+            Console.ResetColor();
+
+            // Gegneranzahl und Punktestand
+            Console.WriteLine($"Gegner: {gegner}");
+            Console.WriteLine($"Score : {score}");
         }
         static void ReadInput()
         {
@@ -293,7 +301,7 @@ namespace Spaceinvaders
             playerY = 25;
 
             gegner = gegneranzahl;
-            Random rand = new Random();
+            Random rand = new();
 
             //spielrand spawn
             Console.SetCursorPosition(0, 0);
