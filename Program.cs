@@ -503,30 +503,34 @@ namespace Spaceinvaders
 +===========================================================+");
             while (gamescreen == true)
             {
-                if (Console.ReadKey(true).Key == ConsoleKey.Enter)
-                {
-                    gamescreen = false;
-                    gameoverscreen = false;
-                    leben = 3;
-                    score = 0;
-                    InitialisiereSpiel();
-                }
+                while (Console.KeyAvailable)
+                    Console.ReadKey(true);
 
-                if (Console.ReadKey(true).Key == ConsoleKey.Escape)
+                var key = Console.ReadKey(true).Key;
+                switch (key)
                 {
-                    gamescreen = false;
-                    spiel = false;
-                }
+                    case ConsoleKey.Enter:
+                        gamescreen = false;
+                        gameoverscreen = false;
+                        leben = 3;
+                        score = 0;
+                        InitialisiereSpiel();
+                        break;
 
-                if (Console.ReadKey(true).Key == ConsoleKey.O)
-                {
-                    gamescreen = false;
-                    optionscreen = true;
+                    case ConsoleKey.Escape:
+                        gamescreen = false;
+                        spiel = false;
+                        break;
+
+                    case ConsoleKey.O:
+                        gamescreen = false;
+                        optionscreen = true;
+                        break;
                 }
+                gamescreen = true;
+                menuscreen = false;
+                Console.Clear();
             }
-            gamescreen = true;
-            menuscreen = false;
-            Console.Clear();
         }
 
         static void ShowOptionen()
