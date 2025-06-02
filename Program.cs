@@ -69,7 +69,7 @@ namespace Spaceinvaders
             while (spiel)
             {
                 if (leben == 0)
-                    gameoverscreen = true;
+                    spiel = false;
                 if (leben > 0 && gegner == 0)
                     InitialisiereSpiel();
 
@@ -78,7 +78,6 @@ namespace Spaceinvaders
                 Thread.Sleep(50); // Spieltempo regulieren (250 ms)
 
             }
-            spiel = false;
             inputThread.Join();
             ShowGameoverScreen();
         }
