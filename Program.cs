@@ -504,7 +504,6 @@ namespace Spaceinvaders
                     case ConsoleKey.Enter:
                         leben = 3;
                         score = 0;
-                        gameoverscreen = false;
                         spiel = true;
                         Spiel();
                         break;
