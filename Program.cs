@@ -85,17 +85,21 @@ namespace Spaceinvaders
             {
                 if (grid[ufoY, symbol] == 'U')
                 {
-                    if (ufoRichtung)
+                    if (!ufoRichtung)
                     {
-                        if (grid[ufoY, symbol + 1] == '|')
+                        if (grid[ufoY, symbol - 1] == '|')
                         {
-                            grid[ufoY, symbol + 1] = ' ';
+                            grid[ufoY, symbol - 1] = ' ';
                             grid[ufoY, symbol] = ' ';
                             score += rand.Next(100, 300);
                         }
+                        else if (grid[ufoY, symbol - 1] != ' ')
+                        {
+                            grid[ufoY, symbol] = ' ';
+                        }
                         else
                         {
-                            grid[ufoY, symbol + 1] = 'U';
+                            grid[ufoY, symbol - 1] = 'U';
                             grid[ufoY, symbol] = ' ';
                         }
                     }
@@ -354,7 +358,7 @@ namespace Spaceinvaders
                 }
             }
 
-            grid[ufoY, 4] = 'U';
+            grid[ufoY, 52] = 'U';
 
             //gegner spawn
             for (int k = 1; k <= gegneranzahl;)
