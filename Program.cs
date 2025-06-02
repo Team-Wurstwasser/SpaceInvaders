@@ -33,9 +33,6 @@ namespace Spaceinvaders
         static int gegnerbewegungdelay = 0;
         static int gegner;
 
-        //screens
-        static bool gamescreen = true;
-
         //sonstige werte
         static bool spiel;
         static bool schuss = false;
@@ -450,14 +447,13 @@ namespace Spaceinvaders
             Console.WriteLine("======================");
             Console.WriteLine(score);
             Console.WriteLine("Drücke Enter um zum Hauptmenü zurückzukehren");
-            while (gamescreen == true)
+            while (true)
             {
                 if (Console.ReadKey(true).Key == ConsoleKey.Enter)
                 {
-                    gamescreen = false;
+                    break;
                 }
             }
-            gamescreen = true;
             ShowMenu();
         }
         static void ShowMenu()
@@ -492,8 +488,7 @@ namespace Spaceinvaders
 |     [Enter] START      [O] Optionen      [Esc] QUIT       |
 +===========================================================+"
 );
-            gamescreen = true;
-            while (gamescreen)
+            while (true)
             {
                 while (Console.KeyAvailable)
                     Console.ReadKey(true);
@@ -509,7 +504,6 @@ namespace Spaceinvaders
                         break;
 
                     case ConsoleKey.Escape:
-                        gamescreen = false;
                         exit = true;
                         break;
 
@@ -540,7 +534,7 @@ namespace Spaceinvaders
   | Entwickler: Sebi und Nils                                     |
   +---------------------------------------------------------------+"
 );
-            while (gamescreen)
+            while (true)
             {
                 
             }
