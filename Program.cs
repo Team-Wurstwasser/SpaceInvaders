@@ -24,7 +24,8 @@ namespace Spaceinvaders
         //ufo
         static int ufoY = 2;
         static bool ufoRichtung;
-        static int ufoTimer = 0;
+        static int ufoTimer;
+        static bool ufoAktiv;
 
         //gegner
         static readonly int gegneranzahl = 50; // max 160
@@ -91,29 +92,77 @@ namespace Spaceinvaders
         {
             Random rand = new();
 
-            for (int symbol = 0; symbol < grid.GetLength(1); symbol++)
+            if (!ufoAktiv && rand.Next(1, 1000) < 20)
             {
-                if (grid[ufoY, symbol] == 'U')
+                ufoAktiv = true;
+                if (ufoRichtung)
                 {
-                    if (!ufoRichtung)
+                    grid[ufoY, 52] = 'U';
+                    ufoRichtung = false;
+                }
+                else
+                {
+                    grid[ufoY, 4] = 'U';
+                    ufoRichtung = true;
+                }
+            }
+
+            if (ufoAktiv)
+            {
+                if (!ufoRichtung)
+                {
+                    for (int symbol = 0; symbol < grid.GetLength(1); symbol++)
                     {
-                        if (grid[ufoY, symbol - 1] == '|')
+                        if (grid[ufoY, symbol] == 'U')
                         {
-                            grid[ufoY, symbol - 1] = ' ';
-                            grid[ufoY, symbol] = ' ';
-                            score += rand.Next(100, 300);
+                            if (grid[ufoY, symbol - 1] == '|')
+                            {
+                                grid[ufoY, symbol - 1] = ' ';
+                                grid[ufoY, symbol] = ' ';
+                                score += rand.Next(100, 300);
+                                ufoAktiv = false;
+
+                            }
+                            else if (grid[ufoY, symbol - 1] != ' ')
+                            {
+                                grid[ufoY, symbol] = ' ';
+                                ufoAktiv = false;
+                            }
+                            else
+                            {
+                                grid[ufoY, symbol - 1] = 'U';
+                                grid[ufoY, symbol] = ' ';
+                            }
                         }
-                        else if (grid[ufoY, symbol - 1] != ' ')
-                        {
-                            grid[ufoY, symbol] = ' ';
-                        }
-                        else
-                        {
-                            grid[ufoY, symbol - 1] = 'U';
-                            grid[ufoY, symbol] = ' ';
-                        }
+
                     }
-                    
+                }
+                else
+                {
+                    for (int symbol = grid.GetLength(1) - 1; symbol > 0; symbol--)
+                    {
+                        if (grid[ufoY, symbol] == 'U')
+                        {
+                            if (grid[ufoY, symbol + 1] == '|')
+                            {
+                                grid[ufoY, symbol + 1] = ' ';
+                                grid[ufoY, symbol] = ' ';
+                                score += rand.Next(100, 300);
+                                ufoAktiv = false;
+                            }
+                            else if (grid[ufoY, symbol + 1] != ' ')
+                            {
+                                grid[ufoY, symbol] = ' ';
+                                ufoAktiv = false;
+                            }
+                            else
+                            {
+                                grid[ufoY, symbol + 1] = 'U';
+                                grid[ufoY, symbol] = ' ';
+                            }
+                        }
+
+                    }
                 }
             }
 
@@ -125,7 +174,7 @@ namespace Spaceinvaders
                     {
                         if (reihe + 1 < grid.GetLength(0) && grid[reihe + 1, symbol] == ' ')
                         {
-                            if (rand.NextDouble() < 0.001)
+                            if (rand.Next(1,1000) < 7)
                             {
                                 grid[reihe + 1, symbol] = 'v'; // feindlicher Schuss
                             }
@@ -367,8 +416,6 @@ namespace Spaceinvaders
                     }
                 }
             }
-
-            grid[ufoY, 52] = 'U';
 
             //gegner spawn
             for (int k = 1; k <= gegneranzahl;)
