@@ -593,7 +593,7 @@ namespace Spaceinvaders
 
             Console.WriteLine(
 @"|                                                               |
-| Benutze ↑ ↓ zum Navigieren und[Enter zum Auswählen]           |
+| Benutze ↑ ↓ zum Navigieren und [Enter] zum Auswählen          |
 |                                                               |
 +---------------------------------------------------------------+
 | Entwickler: Sebi und Nils                                     |
