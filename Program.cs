@@ -34,10 +34,7 @@ namespace Spaceinvaders
         static int gegner;
 
         //screens
-        static bool gameoverscreen;
         static bool gamescreen = true;
-        static bool menuscreen = false;
-        static bool optionscreen = false;
 
         //sonstige werte
         static bool spiel;
