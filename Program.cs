@@ -544,12 +544,12 @@ namespace Spaceinvaders
                 {
                     case ConsoleKey.UpArrow:
                         OptionenAuswahl--;
-                        if (OptionenAuswahl < 1) OptionenAuswahl = 2;
+                        if (OptionenAuswahl < 1) OptionenAuswahl = 3;
                         break;
 
                     case ConsoleKey.DownArrow:
                         OptionenAuswahl++;
-                        if (OptionenAuswahl > 2) OptionenAuswahl = 1;
+                        if (OptionenAuswahl > 3) OptionenAuswahl = 1;
                         break;
                     case ConsoleKey.Escape:
                         menu = false;
@@ -578,13 +578,14 @@ namespace Spaceinvaders
 +---------------------------------------------------------------+
 |                                                               |");
 
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 4; i++)
             {
 
                 string option = i switch
                 {
                     0 => "Scoreboard",
                     1 => "Einstellungen",
+                    2 => "Zurück zum Hauptmenü",
                     _ => ""
                 };
                 string zeiger = (i + 1 == selected) ? ">>" : "  ";
