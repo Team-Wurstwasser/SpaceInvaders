@@ -4,6 +4,7 @@ namespace Spaceinvaders
     using System.Threading;
     using System.Collections.Generic;
     using System.Reflection;
+    using System.Diagnostics.Metrics;
 
     class Program
     {
@@ -528,28 +529,76 @@ namespace Spaceinvaders
         static void ShowOptionen()
         {
             Console.Clear();
+            bool menu = true;
+            int OptionenAuswahl = 1;
+
+            do
+            {
+                EinstellungenOptions(OptionenAuswahl);
+
+                while (Console.KeyAvailable)
+                    Console.ReadKey(true);
+
+                var key = Console.ReadKey(true).Key;
+                switch (key)
+                {
+                    case ConsoleKey.UpArrow:
+                        OptionenAuswahl--;
+                        if (OptionenAuswahl < 1) OptionenAuswahl = 2;
+                        break;
+
+                    case ConsoleKey.DownArrow:
+                        OptionenAuswahl++;
+                        if (OptionenAuswahl > 2) OptionenAuswahl = 1;
+                        break;
+                    case ConsoleKey.Escape:
+                        menu = false;
+                        break;
+
+                    case ConsoleKey.Enter:
+                    case ConsoleKey.Spacebar:
+                        Console.Clear();
+                        switch (OptionenAuswahl)
+                        {
+                            
+                        }
+                        break;
+                }
+
+            } while (menu);
+        }
+
+        static void EinstellungenOptions(int selected)
+        {
+            Console.SetCursorPosition(0, 0);
             Console.WriteLine(
 @"+---------------------------------------------------------------+
 |                        M  E  N  Ü                             |
 |                 -Bitte wähle eine Option -                    |
 +---------------------------------------------------------------+
-|                                                               |
-|    [1] Scoreboard                                             |
-|    [2] Einstellungen                                          |
-|                                                               |
-|                                                               |
-|                                                               |
+|                                                               |");
+
+            for (int i = 0; i < 3; i++)
+            {
+
+                string option = i switch
+                {
+                    0 => "Scoreboard",
+                    1 => "Einstellungen",
+                    _ => ""
+                };
+                string zeiger = (i + 1 == selected) ? ">>" : "  ";
+                Console.WriteLine($"|  {zeiger} {option,-58}|");
+            }
+
+            Console.WriteLine(
+@"|                                                               |
 | Benutze ↑ ↓ zum Navigieren und[Enter zum Auswählen]           |
 |                                                               |
 +---------------------------------------------------------------+
 | Entwickler: Sebi und Nils                                     |
 +---------------------------------------------------------------+"
-);          
-            bool menu = true;
-            while (menu)
-            {
-                
-            }
+);
         }
     }
 }
