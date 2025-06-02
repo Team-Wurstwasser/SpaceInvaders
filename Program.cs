@@ -21,22 +21,26 @@ namespace Spaceinvaders
         static int playerY;
         static int leben;
 
+        //ufo
         static int ufoY = 2;
         static bool ufoRichtung;
         static int ufoTimer = 0;
 
+        //gegner
+        static readonly int gegneranzahl = 50; // max 160
+        static bool gegnerbewegung = false; // false == negativ
+        static int gegnerbewegungdelay = 0;
+        static int gegner;
+
+        //screens
+        static bool gameover;
+        static bool gamescreen = true;
+        static bool menu = false;
 
         //sonstige werte
         static bool spiel = true;
         static bool schuss = false;
-        static bool gameover;
-        static bool gamescreen = true;
-        static bool menu = false;
-        static bool gegnerbewegung = false; // false == negativ
-        static int gegnerbewegungdelay = 0;
         static int inputX;
-        static readonly int gegneranzahl = 50; // max 160
-        static int gegner;
         static int score;
 
         static void Main()
