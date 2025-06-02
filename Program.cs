@@ -80,7 +80,7 @@ namespace Spaceinvaders
         {
             Random rand = new();
 
-            if (!ufoAktiv && rand.Next(1, 1000) < 20)
+            if (!ufoAktiv && rand.Next(1, 1000) < 20 && ufoTimer > 700)
             {
                 ufoAktiv = true;
                 if (ufoRichtung)
@@ -93,7 +93,13 @@ namespace Spaceinvaders
                     grid[ufoY, 4] = 'U';
                     ufoRichtung = true;
                 }
+                ufoTimer = 0;
             }
+            else
+            {
+                ufoTimer++;
+            }
+
 
             if (ufoAktiv)
             {
@@ -501,6 +507,7 @@ namespace Spaceinvaders
                         leben = 3;
                         score = 0;
                         spiel = true;
+                        ufoTimer = 0;
                         menu = false;
                         Spiel();
                         break;
