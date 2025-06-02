@@ -21,8 +21,7 @@ namespace Spaceinvaders
         static int playerY;
         static int leben;
 
-        static bool ufoAktiv = false;
-        static int ufoY = 2; // oberste Zeile unter Spielfeldrand
+        static int ufoY = 2;
         static bool ufoRichtung;
         static int ufoTimer = 0;
 
