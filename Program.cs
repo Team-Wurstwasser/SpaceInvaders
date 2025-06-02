@@ -86,7 +86,7 @@ namespace Spaceinvaders
         {
             Random rand = new();
 
-            if (!ufoAktiv && rand.NextDouble() < 100)
+            if (!ufoAktiv && rand.Next(1, 1000) < 20)
             {
                 ufoAktiv = true;
                 if (ufoRichtung)
@@ -168,7 +168,7 @@ namespace Spaceinvaders
                     {
                         if (reihe + 1 < grid.GetLength(0) && grid[reihe + 1, symbol] == ' ')
                         {
-                            if (rand.NextDouble() < 0.001)
+                            if (rand.Next(1,1000) < 7)
                             {
                                 grid[reihe + 1, symbol] = 'v'; // feindlicher Schuss
                             }
