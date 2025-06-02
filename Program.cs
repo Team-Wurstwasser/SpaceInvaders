@@ -40,36 +40,34 @@ namespace Spaceinvaders
         static bool optionscreen = false;
 
         //sonstige werte
-        static bool spiel = true;
+        static bool spiel;
         static bool schuss = false;
         static int inputX;
         static int score;
+        static bool exit;
 
         static void Main()
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
             Console.CursorVisible = false;
+            
+            do
+            {
+                ShowMenu();
+
+            } while (!exit);
+
+        }
+
+        static void Spiel()
+        {
             Thread inputThread = new(ReadInput);
             inputThread.Start();
-            ShowMenu();
+            Console.Clear();
             InitialisiereSpiel();
-            Render();
-            Thread.Sleep(10);
-
             // Game Loop 
             while (spiel)
             {
-
-                if (menuscreen == true)
-                {
-                    ShowMenu();
-                }
-
-                if (optionscreen == true)
-                {
-                    ShowOptionen();
-                }
-
                 if (leben == 0)
                     gameoverscreen = true;
                 if (leben > 0 && gegner == 0)
@@ -79,13 +77,10 @@ namespace Spaceinvaders
                 Render();   // Spielfeld neu zeichnen
                 Thread.Sleep(50); // Spieltempo regulieren (250 ms)
 
-                if (gameoverscreen == true)
-                {
-                    ShowGameoverScreen();
-                }
             }
-            Console.Clear();
+            spiel = false;
             inputThread.Join();
+            ShowGameoverScreen();
         }
 
         static void Update()
@@ -378,7 +373,7 @@ namespace Spaceinvaders
                             inputX = -1;
                             break;
                         case ConsoleKey.Escape:
-                            gameoverscreen = true;
+                            spiel = false;
                             break;
                         case ConsoleKey.UpArrow:
                         case ConsoleKey.Spacebar:
@@ -464,11 +459,10 @@ namespace Spaceinvaders
                 if (Console.ReadKey(true).Key == ConsoleKey.Enter)
                 {
                     gamescreen = false;
-                    menuscreen = true;
                 }
             }
             gamescreen = true;
-            Console.Clear();
+            ShowMenu();
         }
         static void ShowMenu()
         {
@@ -500,8 +494,10 @@ namespace Spaceinvaders
 |                                                           |
 |                                                           |
 |     [Enter] START      [O] Optionen      [Esc] QUIT       |
-+===========================================================+");
-            while (gamescreen == true)
++===========================================================+"
+);
+            gamescreen = true;
+            while (gamescreen)
             {
                 while (Console.KeyAvailable)
                     Console.ReadKey(true);
@@ -510,26 +506,22 @@ namespace Spaceinvaders
                 switch (key)
                 {
                     case ConsoleKey.Enter:
-                        gamescreen = false;
-                        gameoverscreen = false;
                         leben = 3;
                         score = 0;
-                        InitialisiereSpiel();
+                        gameoverscreen = false;
+                        spiel = true;
+                        Spiel();
                         break;
 
                     case ConsoleKey.Escape:
                         gamescreen = false;
-                        spiel = false;
+                        exit = true;
                         break;
 
                     case ConsoleKey.O:
-                        gamescreen = false;
-                        optionscreen = true;
+                        ShowOptionen();
                         break;
                 }
-                gamescreen = true;
-                menuscreen = false;
-                Console.Clear();
             }
         }
 
@@ -553,12 +545,10 @@ namespace Spaceinvaders
   | Entwickler: Sebi und Nils                                     |
   +---------------------------------------------------------------+"
 );
-            while (gamescreen == true)
+            while (gamescreen)
             {
                 
             }
-            gamescreen = true;
-            Console.Clear();
         }
     }
 }
