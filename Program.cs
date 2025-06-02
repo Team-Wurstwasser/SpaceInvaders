@@ -454,7 +454,6 @@ namespace Spaceinvaders
                     break;
                 }
             }
-            ShowMenu();
         }
         static void ShowMenu()
         {
@@ -488,7 +487,9 @@ namespace Spaceinvaders
 |     [Enter] START      [O] Optionen      [Esc] QUIT       |
 +===========================================================+"
 );
-            while (true)
+            bool menu = true;
+
+            while (menu)
             {
                 while (Console.KeyAvailable)
                     Console.ReadKey(true);
@@ -500,14 +501,17 @@ namespace Spaceinvaders
                         leben = 3;
                         score = 0;
                         spiel = true;
+                        menu = false;
                         Spiel();
                         break;
 
                     case ConsoleKey.Escape:
                         exit = true;
-                        break;
+                        menu = false;
+                        continue;
 
                     case ConsoleKey.O:
+                        menu = false;
                         ShowOptionen();
                         break;
                 }
@@ -533,8 +537,9 @@ namespace Spaceinvaders
   +---------------------------------------------------------------+
   | Entwickler: Sebi und Nils                                     |
   +---------------------------------------------------------------+"
-);
-            while (true)
+);          
+            bool menu = true;
+            while (menu)
             {
                 
             }
