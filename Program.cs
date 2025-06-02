@@ -534,7 +534,7 @@ namespace Spaceinvaders
 
             do
             {
-                EinstellungenOptions(OptionenAuswahl);
+                ZeigeOptions(OptionenAuswahl);
 
                 while (Console.KeyAvailable)
                     Console.ReadKey(true);
@@ -568,7 +568,7 @@ namespace Spaceinvaders
             } while (menu);
         }
 
-        static void EinstellungenOptions(int selected)
+        static void ZeigeOptions(int selected)
         {
             Console.SetCursorPosition(0, 0);
             Console.WriteLine(
