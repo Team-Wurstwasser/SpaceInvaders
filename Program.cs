@@ -33,9 +33,10 @@ namespace Spaceinvaders
         static int gegner;
 
         //screens
-        static bool gameover;
+        static bool gameoverscreen;
         static bool gamescreen = true;
-        static bool menu = false;
+        static bool menuscreen = false;
+        static bool optionscreen = false;
 
         //sonstige werte
         static bool spiel = true;
@@ -58,13 +59,18 @@ namespace Spaceinvaders
             while (spiel)
             {
 
-                if (menu == true)
+                if (menuscreen == true)
                 {
                     ShowMenu();
                 }
 
+                if (optionscreen == true)
+                {
+                    ShowOptionen();
+                }
+
                 if (leben == 0)
-                    gameover = true;
+                    gameoverscreen = true;
                 if (leben > 0 && gegner == 0)
                     InitialisiereSpiel();
 
@@ -72,7 +78,7 @@ namespace Spaceinvaders
                 Render();   // Spielfeld neu zeichnen
                 Thread.Sleep(50); // Spieltempo regulieren (250 ms)
 
-                if (gameover == true)
+                if (gameoverscreen == true)
                 {
                     ShowGameoverScreen();
                 }
@@ -323,7 +329,7 @@ namespace Spaceinvaders
                             inputX = -1;
                             break;
                         case ConsoleKey.Escape:
-                            gameover = true;
+                            gameoverscreen = true;
                             break;
                         case ConsoleKey.UpArrow:
                         case ConsoleKey.Spacebar:
@@ -411,7 +417,7 @@ namespace Spaceinvaders
                 if (Console.ReadKey(true).Key == ConsoleKey.Enter)
                 {
                     gamescreen = false;
-                    menu = true;
+                    menuscreen = true;
                 }
             }
             gamescreen = true;
@@ -446,14 +452,14 @@ namespace Spaceinvaders
 |                           /__\                            |
 |                                                           |
 |                                                           |
-|     [Enter] START     [M] Scoreboard     [Esc] QUIT       |
+|     [Enter] START      [O] Optionen      [Esc] QUIT       |
 +===========================================================+");
             while (gamescreen == true)
             {
                 if (Console.ReadKey(true).Key == ConsoleKey.Enter)
                 {
                     gamescreen = false;
-                    gameover = false;
+                    gameoverscreen = false;
                     leben = 3;
                     score = 0;
                     InitialisiereSpiel();
@@ -464,9 +470,43 @@ namespace Spaceinvaders
                     gamescreen = false;
                     spiel = false;
                 }
+
+                if (Console.ReadKey(true).Key == ConsoleKey.O)
+                {
+                    gamescreen = false;
+                    optionscreen = true;
+                }
             }
             gamescreen = true;
-            menu = false;
+            menuscreen = false;
+            Console.Clear();
+        }
+
+        static void ShowOptionen()
+        {
+            Console.Clear();
+            Console.WriteLine(
+ @"  +---------------------------------------------------------------+
+  |                        M  E  N  Ü                             |
+  |                 -Bitte wähle eine Option -                    |
+  +---------------------------------------------------------------+
+  |                                                               |
+  |    [1] Scoreboard                                             |
+  |    [2] Einstellungen                                          |
+  |                                                               |
+  |                                                               |
+  |                                                               |
+  | Benutze ↑ ↓ zum Navigieren und[Enter zum Auswählen]           |
+  |                                                               |
+  +---------------------------------------------------------------+
+  | Entwickler: Sebi und Nils                                     |
+  +---------------------------------------------------------------+"
+);
+            while (gamescreen == true)
+            {
+                
+            }
+            gamescreen = true;
             Console.Clear();
         }
     }
