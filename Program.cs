@@ -41,6 +41,8 @@ namespace Spaceinvaders
         static int score;
         static bool exit;
 
+        static List<string> Scoreboardlist = new();
+
         static void Main()
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
@@ -48,6 +50,7 @@ namespace Spaceinvaders
             
             do
             {
+
                 ShowMenu();
 
             } while (!exit);
@@ -449,11 +452,16 @@ namespace Spaceinvaders
         static void ShowGameoverScreen()
         {
             Console.Clear();
+            Console.Write("Gib deinen Namen ein: ");
+            string Name = Console.ReadLine();
+            Console.Clear();
+
             Console.WriteLine("======================");
             Console.WriteLine("      Game  Over      ");
             Console.WriteLine("======================");
             Console.WriteLine(score);
             Console.WriteLine("Drücke Enter um zum Hauptmenü zurückzukehren");
+            Scoreboardlist.Add($"{Name,-30}"+Convert.ToString(score));
             while (true)
             {
                 if (Console.ReadKey(true).Key == ConsoleKey.Enter)
@@ -558,9 +566,9 @@ namespace Spaceinvaders
                     case ConsoleKey.Enter:
                     case ConsoleKey.Spacebar:
                         Console.Clear();
-                        switch (OptionenAuswahl)
+                        
                         {
-                            
+                            Scoreboard();
                         }
                         break;
                 }
@@ -600,6 +608,15 @@ namespace Spaceinvaders
 | Entwickler: Sebi und Nils                                     |
 +---------------------------------------------------------------+"
 );
+        }
+        static void Scoreboard()
+        {
+            Console.Clear();
+            foreach (string Scoreboard in Scoreboardlist)
+            {
+                Console.WriteLine(Scoreboard);
+            }
+            Console.ReadKey();
         }
     }
 }
