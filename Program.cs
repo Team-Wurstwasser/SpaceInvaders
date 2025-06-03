@@ -612,9 +612,16 @@ namespace Spaceinvaders
         static void Scoreboard()
         {
             Console.Clear();
+            Console.WriteLine(
+@"+---------------------------------------------------------------+
+|                                                               |
+|                        SCOREBOARD                             |
+|                                                               |
++---------------------------------------------------------------+
+|                                                               |");
             foreach (string Scoreboard in Scoreboardlist)
             {
-                Console.WriteLine(Scoreboard);
+                Console.WriteLine($"|          {Scoreboard,-54}|");
             }
             Console.ReadKey();
         }
