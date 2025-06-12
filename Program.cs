@@ -47,7 +47,7 @@ namespace Spaceinvaders
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
             Console.CursorVisible = false;
-            
+
             do
             {
 
@@ -172,7 +172,7 @@ namespace Spaceinvaders
                     {
                         if (reihe + 1 < grid.GetLength(0) && grid[reihe + 1, symbol] == ' ')
                         {
-                            if (rand.Next(1,1000) < 7)
+                            if (rand.Next(1, 1000) < 7)
                             {
                                 grid[reihe + 1, symbol] = 'v'; // feindlicher Schuss
                             }
@@ -209,7 +209,7 @@ namespace Spaceinvaders
             }
 
             //neue spielerposition erstelle 
-            
+
             //spielerbewegung
             int newPlayerX = playerX + inputX;
 
@@ -226,7 +226,7 @@ namespace Spaceinvaders
 
 
             //schießen
-            if (schuss == true && (grid[playerY -1, playerX] == ' ') && (grid[playerY - 2, playerX] == ' ') && (grid[playerY - 2, playerX -1] != '|') && (grid[playerY - 2, playerX +1] != '|'))
+            if (schuss == true && (grid[playerY - 1, playerX] == ' ') && (grid[playerY - 2, playerX] == ' ') && (grid[playerY - 2, playerX - 1] != '|') && (grid[playerY - 2, playerX + 1] != '|'))
             {
                 grid[playerY - 1, playerX] = '|';
             }
@@ -424,7 +424,7 @@ namespace Spaceinvaders
                 if (grid[reihe, symbol] != '*')
                 {
                     grid[reihe, symbol] = '*';
-                    k++; 
+                    k++;
                 }
             }
 
@@ -461,14 +461,8 @@ namespace Spaceinvaders
             Console.WriteLine("======================");
             Console.WriteLine(score);
             Console.WriteLine("Drücke Enter um zum Hauptmenü zurückzukehren");
-            Scoreboardlist.Add($"{Name,-30}"+Convert.ToString(score));
-            while (true)
-            {
-                if (Console.ReadKey(true).Key == ConsoleKey.Enter)
-                {
-                    break;
-                }
-            }
+            Scoreboardlist.Add($"{Name,-30}{score}");
+            while (Console.ReadKey(true).Key != ConsoleKey.Enter) { }
         }
         static void ShowMenu()
         {
@@ -566,7 +560,7 @@ namespace Spaceinvaders
                     case ConsoleKey.Enter:
                     case ConsoleKey.Spacebar:
                         Console.Clear();
-                        
+
                         {
                             Scoreboard();
                         }
@@ -619,10 +613,19 @@ namespace Spaceinvaders
 |                                                               |
 +---------------------------------------------------------------+
 |                                                               |");
-            foreach (string Scoreboard in Scoreboardlist)
+            Scoreboardlist.OrderByDescending(scoreboardwerte => Convert.ToInt32(scoreboardwerte.Substring(30)));
+            foreach (string eintrag in Scoreboardlist)
             {
-                Console.WriteLine($"|          {Scoreboard,-54}|");
+                Console.WriteLine($"|          {eintrag,-53}|");
             }
+
+            Console.WriteLine(
+@"|                                                               |
++---------------------------------------------------------------+
+|                                                               |
+|   Drücke eine beliebige Taste, um zum Menü zurückzukehren...  |
+|                                                               |
++---------------------------------------------------------------+");
             Console.ReadKey();
         }
     }
