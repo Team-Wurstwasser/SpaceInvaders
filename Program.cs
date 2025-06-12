@@ -567,7 +567,7 @@ namespace Spaceinvaders
                                 Scoreboard();
                                 break;
                             case 2:
-                                Einstellungen();
+                                ShowEinstellungen();
                                 break;
                             case 3:
                                 menu = false;
@@ -617,31 +617,104 @@ namespace Spaceinvaders
         {
             Console.Clear();
             Console.WriteLine(
-@"+---------------------------------------------------------------+
-|                                                               |
-|                        SCOREBOARD                             |
-|                                                               |
-+---------------------------------------------------------------+
-|                                                               |");
+@"+----------------------------------------------------------------------+
+|                                                                      |
+|                              SCOREBOARD                              |
+|                                                                      |
++----------------------------------------------------------------------+
+|                                                                      |");
             Scoreboardlist.OrderByDescending(scoreboardwerte => Convert.ToInt32(scoreboardwerte.Substring(30)));
             foreach (string eintrag in Scoreboardlist)
             {
-                Console.WriteLine($"|          {eintrag,-53}|");
+                Console.WriteLine($"|          {eintrag,-60}|");
+            }
+
+            Console.WriteLine(
+@"|                                                                      |
++----------------------------------------------------------------------+
+|                                                                      |
+|   Drücke eine beliebige Taste, um zu den Optionen zurückzukehren...  |
+|                                                                      |
++----------------------------------------------------------------------+");
+            Console.ReadKey();
+            Console.Clear();
+        }
+
+        static void ShowEinstellungen()
+        {
+            Console.Clear();
+            bool menu = true;
+            int EinstellungenAuswahl = 1;
+
+            do
+            {
+                ZeigeEinstellungen(EinstellungenAuswahl);
+
+                while (Console.KeyAvailable)
+                    Console.ReadKey(true);
+
+                var key = Console.ReadKey(true).Key;
+                switch (key)
+                {
+                    case ConsoleKey.UpArrow:
+                        EinstellungenAuswahl--;
+                        if (EinstellungenAuswahl < 1) EinstellungenAuswahl = 1;
+                        break;
+
+                    case ConsoleKey.DownArrow:
+                        EinstellungenAuswahl++;
+                        if (EinstellungenAuswahl > 1) EinstellungenAuswahl = 1;
+                        break;
+                    case ConsoleKey.Escape:
+                        menu = false;
+                        break;
+
+                    case ConsoleKey.Enter:
+                    case ConsoleKey.Spacebar:
+                        Console.Clear();
+                        switch (EinstellungenAuswahl)
+                        {
+
+                            case 1:
+                                menu = false;
+                                break;
+                        }
+                        break;
+                }
+
+            } while (menu);
+        }
+
+        static void ZeigeEinstellungen(int selected)
+        {
+            Console.SetCursorPosition(0, 0);
+            Console.WriteLine(
+@"+---------------------------------------------------------------+
+|                   E i n s t e l l u n g e n                   |
+|                  - Bitte wähle eine Option -                  |
++---------------------------------------------------------------+
+|                                                               |");
+
+            for (int i = 0; i < 1; i++)
+            {
+
+                string option = i switch
+                {
+                    0 => "Zurück zu den  Optionen",
+                    _ => ""
+                };
+                string zeiger = (i + 1 == selected) ? ">>" : "  ";
+                Console.WriteLine($"|  {zeiger} {option,-58}|");
             }
 
             Console.WriteLine(
 @"|                                                               |
+| Benutze ↑ ↓ zum Navigieren und [Enter] zum Auswählen          |
+|                                                               |
 +---------------------------------------------------------------+
-|                                                               |
-|   Drücke eine beliebige Taste, um zum Menü zurückzukehren...  |
-|                                                               |
-+---------------------------------------------------------------+");
-            Console.ReadKey();
-        }
-
-        static void Einstellungen()
-        {
-            Console.ReadKey();
+| Entwickler: Sebi und Nils                                     |
++---------------------------------------------------------------+"
+);
         }
     }
 }
