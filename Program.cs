@@ -700,7 +700,7 @@ namespace Spaceinvaders
 
                 string option = i switch
                 {
-                    0 => "Zurück zu den  Optionen",
+                    0 => "Zurück zu den Optionen",
                     _ => ""
                 };
                 string zeiger = (i + 1 == selected) ? ">>" : "  ";
