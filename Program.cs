@@ -560,10 +560,19 @@ namespace Spaceinvaders
                     case ConsoleKey.Enter:
                     case ConsoleKey.Spacebar:
                         Console.Clear();
-
+                        switch (OptionenAuswahl)
                         {
-                            Scoreboard();
-                        }
+
+                            case 1:
+                                Scoreboard();
+                                break;
+                            case 2:
+                                Einstellungen();
+                                break;
+                            case 3:
+                                menu = false;
+                                break;
+                            }
                         break;
                 }
 
@@ -575,8 +584,8 @@ namespace Spaceinvaders
             Console.SetCursorPosition(0, 0);
             Console.WriteLine(
 @"+---------------------------------------------------------------+
-|                        M  E  N  Ü                             |
-|                 -Bitte wähle eine Option -                    |
+|                        O p t i o n e n                        |
+|                  - Bitte wähle eine Option -                  |
 +---------------------------------------------------------------+
 |                                                               |");
 
@@ -603,6 +612,7 @@ namespace Spaceinvaders
 +---------------------------------------------------------------+"
 );
         }
+
         static void Scoreboard()
         {
             Console.Clear();
@@ -626,6 +636,11 @@ namespace Spaceinvaders
 |   Drücke eine beliebige Taste, um zum Menü zurückzukehren...  |
 |                                                               |
 +---------------------------------------------------------------+");
+            Console.ReadKey();
+        }
+
+        static void Einstellungen()
+        {
             Console.ReadKey();
         }
     }
