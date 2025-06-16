@@ -1,1 +1,1 @@
-Ein Spiel das nicht von Nils und Sebastian enwickelt wird.
+Ein Spiel das von Sebastian und nicht Nils enwickelt wird.
