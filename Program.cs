@@ -613,7 +613,7 @@ namespace Spaceinvaders
                 string option = i switch
                 {
                     0 => "Scoreboard",
-                    1 => "Einstellungen",
+                    1 => "Game Difficulty",
                     2 => "Zurück zum Hauptmenü",
                     _ => ""
                 };
