@@ -21,6 +21,7 @@ namespace Spaceinvaders
         static int playerX;
         static int playerY = 25;
         static int leben;
+        static int livedif = 5;
 
         //ufo
         static int ufoY = 2;
@@ -33,6 +34,7 @@ namespace Spaceinvaders
         static bool gegnerbewegung = false; // false == negativ
         static int gegnerbewegungdelay = 0;
         static int gegner;
+        static int schussanzahl = 7;
 
         //sonstige werte
         static bool spiel;
@@ -74,7 +76,7 @@ namespace Spaceinvaders
 
                 Update();   // Spielerposition aktualisieren
                 Render();   // Spielfeld neu zeichnen
-                Thread.Sleep(5); // Spieltempo regulieren (250 ms)
+                Thread.Sleep(50); // Spieltempo regulieren (250 ms)
 
             }
             inputThread.Join();
@@ -173,7 +175,7 @@ namespace Spaceinvaders
                     {
                         if (reihe + 1 < grid.GetLength(0) && grid[reihe + 1, symbol] == ' ')
                         {
-                            if (rand.Next(1, 1000) < 7)
+                            if (rand.Next(1, 1000) < schussanzahl)
                             {
                                 grid[reihe + 1, symbol] = 'v'; // feindlicher Schuss
                             }
@@ -353,7 +355,7 @@ namespace Spaceinvaders
             Console.WriteLine();
             Console.Write("Leben: ");
             Console.ForegroundColor = ConsoleColor.Red;
-            string Lebensbalken = new string('♥', leben).PadRight(3, ' ');
+            string Lebensbalken = new string('♥', leben).PadRight(livedif, ' ');
             Console.WriteLine(Lebensbalken);
             Console.ResetColor();
 
@@ -526,7 +528,7 @@ namespace Spaceinvaders
                 switch (key)
                 {
                     case ConsoleKey.Enter:
-                        leben = 3;
+                        leben = livedif;
                         score = 0;
                         spiel = true;
                         ufoTimer = 0;
@@ -701,30 +703,40 @@ namespace Spaceinvaders
                                 gegneranzahl = 50;
                                 gegner = gegneranzahl;
                                 schutz = true;
+                                schussanzahl = 7;
+                                livedif = 5;
                                 break;
 
                             case 2:
                                 gegneranzahl = 60;
                                 gegner = gegneranzahl;
                                 schutz = true;
+                                schussanzahl = 10;
+                                livedif = 3;
                                 break;
 
                             case 3:
                                 gegneranzahl = 70;
                                 gegner = gegneranzahl;
                                 schutz = true;
+                                schussanzahl = 10;
+                                livedif = 3;
                                 break;
 
                             case 4:
                                 gegneranzahl = 80;
                                 gegner = gegneranzahl;
                                 schutz = true;
+                                schussanzahl = 15;
+                                livedif = 3;
                                 break;
 
                             case 5:
                                 gegneranzahl = 99;
                                 gegner = gegneranzahl;
                                 schutz = false;
+                                schussanzahl = 20;
+                                livedif = 1;
                                 break;
 
                             case 6:
