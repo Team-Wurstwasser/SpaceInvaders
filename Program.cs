@@ -40,6 +40,7 @@ namespace Spaceinvaders
         static int inputX;
         static int score;
         static bool exit;
+        static int schwierigkeit;
 
         static List<string> Scoreboardlist = new();
 
@@ -73,7 +74,7 @@ namespace Spaceinvaders
 
                 Update();   // Spielerposition aktualisieren
                 Render();   // Spielfeld neu zeichnen
-                Thread.Sleep(50); // Spieltempo regulieren (250 ms)
+                Thread.Sleep(5); // Spieltempo regulieren (250 ms)
 
             }
             inputThread.Join();
@@ -452,16 +453,32 @@ namespace Spaceinvaders
         static void ShowGameoverScreen()
         {
             Console.Clear();
+
+            Console.WriteLine(
+@"+----------------------------------------------+
+|                                              |
+|              G A M E   O V E R               |
+|             - Schiff zerstört -              |
+|                                              |
+|                                              |
+|                   *   *                      |
+|                *   /|\   *                   |
+|               *   /_X_\   *                  |
+|                * /_/ \_\ *                   |
+|                 /_/___\_\                    |
+|                 [__*_*__]                    |
+|                   /   \                      |
+|                  /_____\                     |
+|                ///     \\\                   |
+|                 * BOOM! *                    |
+|                                              |
+|                                              |
++----------------------------------------------+");
+            Console.WriteLine($"Punkteanzahl: {score}");
             Console.Write("Gib deinen Namen ein: ");
             string Name = Console.ReadLine();
-            Console.Clear();
-
-            Console.WriteLine("======================");
-            Console.WriteLine("      Game  Over      ");
-            Console.WriteLine("======================");
-            Console.WriteLine(score);
-            Console.WriteLine("Drücke Enter um zum Hauptmenü zurückzukehren");
             Scoreboardlist.Add($"{Name,-30}{score}");
+            Console.Write("Drücke ENTER um zum Hauptmenü zurückzukehren ");
             while (Console.ReadKey(true).Key != ConsoleKey.Enter) { }
         }
         static void ShowMenu()
@@ -527,6 +544,7 @@ namespace Spaceinvaders
                 }
             }
         }
+
 
         static void ShowOptionen()
         {
@@ -599,7 +617,7 @@ namespace Spaceinvaders
                     2 => "Zurück zum Hauptmenü",
                     _ => ""
                 };
-                string zeiger = (i + 1 == selected) ? ">>" : "  ";
+                string zeiger = (i + 1 == selected) ? "> " : "  ";
                 Console.WriteLine($"|  {zeiger} {option,-58}|");
             }
 
@@ -612,6 +630,7 @@ namespace Spaceinvaders
 +---------------------------------------------------------------+"
 );
         }
+
 
         static void Scoreboard()
         {
@@ -639,6 +658,7 @@ namespace Spaceinvaders
             Console.ReadKey();
             Console.Clear();
         }
+
 
         static void ShowEinstellungen()
         {
@@ -678,6 +698,12 @@ namespace Spaceinvaders
                             case 1:
                                 menu = false;
                                 break;
+
+                            case 2:
+                                break;
+
+                            case 3:
+                                break;
                         }
                         break;
                 }
@@ -690,17 +716,22 @@ namespace Spaceinvaders
             Console.SetCursorPosition(0, 0);
             Console.WriteLine(
 @"+---------------------------------------------------------------+
-|                   E i n s t e l l u n g e n                   |
+|                 G a m e  D i f f i c u l t y                  |
 |                  - Bitte wähle eine Option -                  |
 +---------------------------------------------------------------+
 |                                                               |");
 
-            for (int i = 0; i < 1; i++)
+            for (int i = 0; i < 3; i++)
             {
 
                 string option = i switch
                 {
-                    0 => "Zurück zu den Optionen",
+                    0 => "Easy",
+                    1 => "Normal",
+                    2 => "Hard",
+                    3 => "Expert",
+                    4 => "Nightmare",
+                    5 => "Zurück zu den Optionen",
                     _ => ""
                 };
                 string zeiger = (i + 1 == selected) ? ">>" : "  ";
