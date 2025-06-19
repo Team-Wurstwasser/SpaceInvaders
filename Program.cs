@@ -29,7 +29,7 @@ namespace Spaceinvaders
         static bool ufoAktiv;
 
         //gegner
-        static readonly int gegneranzahl = 50; // max 160
+        static int gegneranzahl = 50; // max 160
         static bool gegnerbewegung = false; // false == negativ
         static int gegnerbewegungdelay = 0;
         static int gegner;
@@ -40,7 +40,6 @@ namespace Spaceinvaders
         static int inputX;
         static int score;
         static bool exit;
-        static int schwierigkeit;
 
         static List<string> Scoreboardlist = new();
 
@@ -696,18 +695,28 @@ namespace Spaceinvaders
                         {
 
                             case 1:
+                                gegneranzahl = 50;
+                                gegner = gegneranzahl;
                                 break;
 
                             case 2:
+                                gegneranzahl = 60;
+                                gegner = gegneranzahl;
                                 break;
 
                             case 3:
+                                gegneranzahl = 70;
+                                gegner = gegneranzahl;
                                 break;
 
                             case 4:
+                                gegneranzahl = 80;
+                                gegner = gegneranzahl;
                                 break;
 
                             case 5:
+                                gegneranzahl = 99;
+                                gegner = gegneranzahl;
                                 break;
 
                             case 6:
