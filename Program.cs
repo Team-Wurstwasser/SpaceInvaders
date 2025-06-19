@@ -678,12 +678,12 @@ namespace Spaceinvaders
                 {
                     case ConsoleKey.UpArrow:
                         EinstellungenAuswahl--;
-                        if (EinstellungenAuswahl < 1) EinstellungenAuswahl = 1;
+                        if (EinstellungenAuswahl < 1) EinstellungenAuswahl = 6;
                         break;
 
                     case ConsoleKey.DownArrow:
                         EinstellungenAuswahl++;
-                        if (EinstellungenAuswahl > 1) EinstellungenAuswahl = 1;
+                        if (EinstellungenAuswahl > 6) EinstellungenAuswahl = 1;
                         break;
                     case ConsoleKey.Escape:
                         menu = false;
@@ -696,13 +696,22 @@ namespace Spaceinvaders
                         {
 
                             case 1:
-                                menu = false;
                                 break;
 
                             case 2:
                                 break;
 
                             case 3:
+                                break;
+
+                            case 4:
+                                break;
+
+                            case 5:
+                                break;
+
+                            case 6:
+                                menu = false;
                                 break;
                         }
                         break;
@@ -721,7 +730,7 @@ namespace Spaceinvaders
 +---------------------------------------------------------------+
 |                                                               |");
 
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 6; i++)
             {
 
                 string option = i switch
@@ -734,7 +743,7 @@ namespace Spaceinvaders
                     5 => "Zurück zu den Optionen",
                     _ => ""
                 };
-                string zeiger = (i + 1 == selected) ? ">>" : "  ";
+                string zeiger = (i + 1 == selected) ? "> " : "  ";
                 Console.WriteLine($"|  {zeiger} {option,-58}|");
             }
 
