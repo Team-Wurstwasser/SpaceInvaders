@@ -14,12 +14,12 @@ namespace Spaceinvaders
         static char[,] grid = new char[hoehe, weite];
         static readonly int schutzHoehe = 3;
         static readonly int schutzBreite = 5;
-        static readonly int[] schutzX = { 8, 20, 32, 44 };
+        static int[] schutzX = { 8, 20, 32, 44 };
 
         //spieler
         static readonly char player = 'A';
         static int playerX;
-        static int playerY;
+        static int playerY = 25;
         static int leben;
 
         //ufo
@@ -40,6 +40,7 @@ namespace Spaceinvaders
         static int inputX;
         static int score;
         static bool exit;
+        static bool schutz = true;
 
         static List<string> Scoreboardlist = new();
 
@@ -391,7 +392,6 @@ namespace Spaceinvaders
         {
             //Spieler zurücksetzen
             playerX = 28;
-            playerY = 25;
 
             gegner = gegneranzahl;
             Random rand = new();
@@ -432,7 +432,7 @@ namespace Spaceinvaders
             grid[playerY, playerX] = player;
 
             //Schutz plazieren
-            int schutzY = playerY - 3;
+            int schutzY = 22;
 
             foreach (int startX in schutzX)
             {
@@ -440,9 +440,12 @@ namespace Spaceinvaders
                 {
                     for (int symbol = 0; symbol < schutzBreite; symbol++)
                     {
-                        int x = startX + symbol;
-                        int y = schutzY - reihe;
-                        grid[y, x] = '#';
+                        if (schutz == true)
+                        {
+                            int x = startX + symbol;
+                            int y = schutzY - reihe;
+                            grid[y, x] = '#';
+                        }
                     }
                 }
             }
@@ -697,26 +700,31 @@ namespace Spaceinvaders
                             case 1:
                                 gegneranzahl = 50;
                                 gegner = gegneranzahl;
+                                schutz = true;
                                 break;
 
                             case 2:
                                 gegneranzahl = 60;
                                 gegner = gegneranzahl;
+                                schutz = true;
                                 break;
 
                             case 3:
                                 gegneranzahl = 70;
                                 gegner = gegneranzahl;
+                                schutz = true;
                                 break;
 
                             case 4:
                                 gegneranzahl = 80;
                                 gegner = gegneranzahl;
+                                schutz = true;
                                 break;
 
                             case 5:
                                 gegneranzahl = 99;
                                 gegner = gegneranzahl;
+                                schutz = false;
                                 break;
 
                             case 6:
