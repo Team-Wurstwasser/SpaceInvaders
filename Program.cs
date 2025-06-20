@@ -76,7 +76,7 @@ namespace Spaceinvaders
 
                 Update();   // Spielerposition aktualisieren
                 Render();   // Spielfeld neu zeichnen
-                Thread.Sleep(50); // Spieltempo regulieren (250 ms)
+                Thread.Sleep(50); // Spieltempo regulieren (50 ms)
 
             }
             inputThread.Join();
@@ -484,7 +484,7 @@ namespace Spaceinvaders
 
             while (Name.Length > 16)
             {
-                Console.WriteLine("Der Name darf maximal 15 Zeichen lang sein. Bitte erneut eingeben:");
+                Console.WriteLine("Der Name darf maximal 15 Zeichen lang sein.");
                 Name = Console.ReadLine();
             }
 
