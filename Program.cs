@@ -479,8 +479,15 @@ namespace Spaceinvaders
 |                                              |
 +----------------------------------------------+");
             Console.WriteLine($"Punkteanzahl: {score}");
-            Console.Write("Gib deinen Namen ein: ");
+            Console.Write("Gib deinen Namen ein (max. 15 Zeichen): ");
             string Name = Console.ReadLine();
+
+            while (Name.Length > 16)
+            {
+                Console.WriteLine("Der Name darf maximal 15 Zeichen lang sein. Bitte erneut eingeben:");
+                Name = Console.ReadLine();
+            }
+
             Scoreboardlist.Add($"{Name,-30}{score}");
             Console.Write("Drücke ENTER um zum Hauptmenü zurückzukehren ");
             while (Console.ReadKey(true).Key != ConsoleKey.Enter) { }
