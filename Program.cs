@@ -9,15 +9,15 @@ namespace Spaceinvaders
     class Program
     {
         // Spielfeld
-        static readonly int weite = 57;
-        static readonly int hoehe = 30;
+        static int weite = 57;
+        static int hoehe = 30;
         static char[,] grid = new char[hoehe, weite];
-        static readonly int schutzHoehe = 3;
-        static readonly int schutzBreite = 5;
+        static int schutzHoehe = 3;
+        static int schutzBreite = 5;
         static int[] schutzX = { 8, 20, 32, 44 };
 
         //spieler
-        static readonly char player = 'A';
+        static char player = '█';
         static int playerX;
         static int playerY = 25;
         static int leben;
@@ -201,9 +201,10 @@ namespace Spaceinvaders
                         grid[reihe + 1, symbol] = ' ';
                         grid[reihe, symbol] = ' ';
                     }
-                    else if (grid[reihe, symbol] == 'v' && grid[reihe + 1, symbol] == 'A')
+                    else if (grid[reihe, symbol] == 'v' && grid[reihe + 1, symbol] == player)
                     {
-                        leben--;
+                        if (leben > 0)
+                            leben--;
                         grid[reihe, symbol] = ' ';
                     }
                     else if (grid[reihe, symbol] == 'v' && grid[reihe + 1, symbol] != ' ')
@@ -388,7 +389,7 @@ namespace Spaceinvaders
                     }
                 }
             }
-        }
+        }  
 
         static void InitialisiereSpiel()
         {
@@ -653,7 +654,7 @@ namespace Spaceinvaders
 |                                                                      |
 +----------------------------------------------------------------------+
 |                                                                      |");
-            Scoreboardlist.OrderByDescending(scoreboardwerte => Convert.ToInt32(scoreboardwerte.Substring(30)));
+            Scoreboardlist.OrderByDescending(scoreboardwerte => Convert.ToInt32(scoreboardwerte.Substring(30))).ToList();
             foreach (string eintrag in Scoreboardlist)
             {
                 Console.WriteLine($"|          {eintrag,-60}|");
