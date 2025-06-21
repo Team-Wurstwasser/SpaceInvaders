@@ -655,7 +655,7 @@ namespace Spaceinvaders
 |                                                                      |
 +----------------------------------------------------------------------+
 |                                                                      |");
-            Scoreboardlist.OrderByDescending(scoreboardwerte => Convert.ToInt32(scoreboardwerte.Substring(30)));
+            Scoreboardlist.OrderByDescending(scoreboardwerte => Convert.ToInt32(scoreboardwerte.Substring(30))).ToList();
             foreach (string eintrag in Scoreboardlist)
             {
                 Console.WriteLine($"|          {eintrag,-60}|");
