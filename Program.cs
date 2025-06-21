@@ -25,9 +25,9 @@ namespace Spaceinvaders
 
         //ufo
         static int ufoY = 2;
-        static bool ufoRichtung;
+        static bool ufoBewegung = false; // false == negativ
         static int ufoTimer;
-        static bool ufoAktiv;
+        static bool ufoAktiv = false;
 
         //gegner
         static int gegneranzahl = 50; // max 160
@@ -74,9 +74,9 @@ namespace Spaceinvaders
                 if (leben > 0 && gegner == 0)
                     InitialisiereSpiel();
 
-                Update();   // Spielerposition aktualisieren
-                Render();   // Spielfeld neu zeichnen
-                Thread.Sleep(50); // Spieltempo regulieren (50 ms)
+                Update();
+                Render();
+                Thread.Sleep(50);
 
             }
             inputThread.Join();
@@ -85,88 +85,90 @@ namespace Spaceinvaders
 
         static void Update()
         {
+            //ufo
             Random rand = new();
 
-            if (!ufoAktiv && rand.Next(1, 1000) < 20 && ufoTimer > 700)
+            if (!ufoAktiv && rand.Next(1, 1000) < 20 && ufoTimer > 70)
             {
                 ufoAktiv = true;
-                if (ufoRichtung)
+                if (ufoBewegung)
                 {
                     grid[ufoY, 52] = 'U';
-                    ufoRichtung = false;
+                    ufoBewegung = false;
                 }
                 else
                 {
                     grid[ufoY, 4] = 'U';
-                    ufoRichtung = true;
+                    ufoBewegung = true;
                 }
-                ufoTimer = 0;
             }
             else
             {
                 ufoTimer++;
             }
 
-
             if (ufoAktiv)
             {
-                if (!ufoRichtung)
+                if (!ufoBewegung)
                 {
-                    for (int symbol = 0; symbol < grid.GetLength(1); symbol++)
+                    if (grid[ufoY, 1] != 'U')
                     {
-                        if (grid[ufoY, symbol] == 'U')
+                        for (int symbol = 0; symbol < grid.GetLength(1); symbol++)
                         {
-                            if (grid[ufoY, symbol - 1] == '|')
+                            if (grid[ufoY, symbol] == 'U')
                             {
-                                grid[ufoY, symbol - 1] = ' ';
-                                grid[ufoY, symbol] = ' ';
-                                score += rand.Next(100, 300);
-                                ufoAktiv = false;
-
-                            }
-                            else if (grid[ufoY, symbol - 1] != ' ')
-                            {
-                                grid[ufoY, symbol] = ' ';
-                                ufoAktiv = false;
-                            }
-                            else
-                            {
-                                grid[ufoY, symbol - 1] = 'U';
-                                grid[ufoY, symbol] = ' ';
+                                if (grid[ufoY, symbol - 1] == '|')
+                                {
+                                    grid[ufoY, symbol - 1] = ' ';
+                                    grid[ufoY, symbol] = ' ';
+                                    score += rand.Next(100, 300);
+                                    ufoAktiv = false;
+                                    ufoTimer = 0;
+                                }
+                                else
+                                {
+                                    grid[ufoY, symbol - 1] = 'U';
+                                    grid[ufoY, symbol] = ' ';
+                                }
                             }
                         }
-
                     }
+                    else ufoBewegung = true;
                 }
-                else
+
+                else if (ufoBewegung)
                 {
-                    for (int symbol = grid.GetLength(1) - 1; symbol > 0; symbol--)
+                    if (grid[ufoY, 55] != 'U')
                     {
-                        if (grid[ufoY, symbol] == 'U')
+                        for (int symbol = grid.GetLength(1) -1; symbol > 0; symbol--)
                         {
-                            if (grid[ufoY, symbol + 1] == '|')
+                            if (grid[ufoY, symbol] == 'U')
                             {
-                                grid[ufoY, symbol + 1] = ' ';
-                                grid[ufoY, symbol] = ' ';
-                                score += rand.Next(100, 300);
-                                ufoAktiv = false;
-                            }
-                            else if (grid[ufoY, symbol + 1] != ' ')
-                            {
-                                grid[ufoY, symbol] = ' ';
-                                ufoAktiv = false;
-                            }
-                            else
-                            {
-                                grid[ufoY, symbol + 1] = 'U';
-                                grid[ufoY, symbol] = ' ';
+                                if (grid[ufoY, symbol + 1] == '|')
+                                {
+                                    grid[ufoY, symbol + 1] = ' ';
+                                    grid[ufoY, symbol] = ' ';
+                                    score += rand.Next(100, 300);
+                                    ufoAktiv = false;
+                                    ufoTimer = 0;
+                                }
+                                else
+                                {
+                                    grid[ufoY, symbol + 1] = 'U';
+                                    grid[ufoY, symbol] = ' ';
+                                }
                             }
                         }
-
                     }
+                    else ufoBewegung = false;
                 }
             }
 
+
+
+
+
+            // gegner schuss
             for (int symbol = 0; symbol < grid.GetLength(1); symbol++)
             {
                 for (int reihe = grid.GetLength(0) - 1; reihe >= 0; reihe--)
@@ -177,7 +179,7 @@ namespace Spaceinvaders
                         {
                             if (rand.Next(1, 1000) < schussanzahl)
                             {
-                                grid[reihe + 1, symbol] = 'v'; // feindlicher Schuss
+                                grid[reihe + 1, symbol] = 'v';
                             }
                         }
                         break;
@@ -209,18 +211,13 @@ namespace Spaceinvaders
                         grid[reihe, symbol] = ' ';
                     }
                 }
-            }
-
-            //neue spielerposition erstelle 
+            } 
 
             //spielerbewegung
             int newPlayerX = playerX + inputX;
-
             if (grid[playerY, newPlayerX] == ' ')
             {
-                // neue position eintragen
                 grid[playerY, newPlayerX] = player;
-                // alte position löschen
                 grid[playerY, playerX] = ' ';
 
                 playerX = newPlayerX;
@@ -228,7 +225,7 @@ namespace Spaceinvaders
             inputX = 0;
 
 
-            //schießen
+            //spieler schuss
             if (schuss == true && (grid[playerY - 1, playerX] == ' ') && (grid[playerY - 2, playerX] == ' ') && (grid[playerY - 2, playerX - 1] != '|') && (grid[playerY - 2, playerX + 1] != '|'))
             {
                 grid[playerY - 1, playerX] = '|';
@@ -261,6 +258,8 @@ namespace Spaceinvaders
                         grid[reihe - 1, symbol] = ' ';
                         grid[reihe, symbol] = ' ';
                         score += rand.Next(100, 300);
+                        ufoAktiv = false;
+                        ufoTimer = 0;
                     }
                     else if (grid[reihe, symbol] == '|' && grid[reihe - 1, symbol] == ' ')
                     {
@@ -278,7 +277,7 @@ namespace Spaceinvaders
             gegnerbewegungdelay++;
             if (gegnerbewegungdelay == 3)
             {
-                if (gegnerbewegung == false)
+                if (!gegnerbewegung)
                 {
                     // Bewegung nach links
                     if (grid[4, 1] != '*' && grid[5, 1] != '*' && grid[6, 1] != '*' && grid[7, 1] != '*' && grid[8, 1] != '*' && grid[9, 1] != '*' && grid[10, 1] != '*' && grid[11, 1] != '*')
@@ -307,7 +306,7 @@ namespace Spaceinvaders
                     }
                     else gegnerbewegung = true;
                 }
-                else if (gegnerbewegung == true)
+                else if (gegnerbewegung)
                 {
                     // Bewegung nach rechts
                     if (grid[4, 55] != '*' && grid[5, 55] != '*' && grid[6, 55] != '*' && grid[7, 55] != '*' && grid[8, 55] != '*' && grid[9, 55] != '*' && grid[10, 55] != '*' && grid[11, 55] != '*')
