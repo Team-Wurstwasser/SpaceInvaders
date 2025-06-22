@@ -86,9 +86,10 @@ namespace Spaceinvaders
 
         static void Update()
         {
-            //ufo
             Random rand = new();
 
+            //ufo
+            //ufo spawn
             if (!ufoAktiv && rand.Next(1, 1000) < 10 && ufoTimer > 70)
             {
                 ufoAktiv = true;
@@ -108,6 +109,7 @@ namespace Spaceinvaders
                 ufoTimer++;
             }
 
+            //ufo bewegung
             if (ufoAktiv)
             {
                 if (!ufoBewegung)
@@ -166,6 +168,7 @@ namespace Spaceinvaders
             }
 
             // gegner schuss
+            // schuss spawn
             for (int symbol = 0; symbol < grid.GetLength(1); symbol++)
             {
                 for (int reihe = grid.GetLength(0) - 1; reihe >= 0; reihe--)
@@ -184,6 +187,7 @@ namespace Spaceinvaders
                 }
             }
 
+            //schuss bewegung
             for (int reihe = grid.GetLength(0) - 1; reihe >= 1; reihe--)
             {
                 for (int symbol = grid.GetLength(1) - 1; symbol >= 1; symbol--)
@@ -232,12 +236,14 @@ namespace Spaceinvaders
             inputX = 0;
 
             //spieler schuss
+            // schuss spawn
             if (schuss == true && (grid[playerY - 1, playerX] == ' ') && (grid[playerY - 2, playerX] == ' ') && (grid[playerY - 2, playerX - 1] != '|') && (grid[playerY - 2, playerX + 1] != '|'))
             {
                 grid[playerY - 1, playerX] = '|';
             }
             schuss = false;
 
+            // schuss bewegung
             for (int reihe = 1; reihe < grid.GetLength(0) - 1; reihe++)
             {
                 for (int symbol = 1; symbol < grid.GetLength(1) - 1; symbol++)
@@ -348,6 +354,8 @@ namespace Spaceinvaders
         static void Render()
         {
             Console.SetCursorPosition(0, 0);
+
+            // spielfeld zeichnen
             for (int reihe = 0; reihe < grid.GetLength(0); reihe++)
             {
                 for (int symbol = 0; symbol < grid.GetLength(1); symbol++)
@@ -356,6 +364,7 @@ namespace Spaceinvaders
                 }
                 Console.WriteLine();
             }
+
             // Lebensbalken anzeigen
             Console.WriteLine();
             Console.Write("Leben: ");
@@ -398,11 +407,11 @@ namespace Spaceinvaders
 
         static void InitialisiereSpiel()
         {
-            //Spieler zurücksetzen
-            playerX = 28;
-
-            gegner = gegneranzahl;
             Random rand = new();
+
+            //Spieler und Gegner zurücksetzen
+            playerX = 28;
+            gegner = gegneranzahl;
 
             //spielrand spawn
             Console.SetCursorPosition(0, 0);
@@ -531,7 +540,7 @@ namespace Spaceinvaders
 +===========================================================+"
 );
             bool menu = true;
-
+            //menüoptionen
             while (menu)
             {
                 while (Console.KeyAvailable)
@@ -710,6 +719,7 @@ namespace Spaceinvaders
                     case ConsoleKey.Enter:
                     case ConsoleKey.Spacebar:
                         Console.Clear();
+                        //schwierigkeitsauswahl
                         switch (EinstellungenAuswahl)
                         {
 
