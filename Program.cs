@@ -365,7 +365,7 @@ namespace Spaceinvaders
             Console.ResetColor();
 
             // Gegneranzahl und Punktestand
-            Console.WriteLine($"Gegner: {gegner}");
+            Console.WriteLine($"Gegner: {gegner,-2}");
             Console.WriteLine($"Score : {score}");
         }
 
