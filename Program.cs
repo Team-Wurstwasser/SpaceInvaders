@@ -367,9 +367,8 @@ namespace Spaceinvaders
             // Gegneranzahl und Punktestand
             Console.WriteLine($"Gegner: {gegner}");
             Console.WriteLine($"Score : {score}");
-            Console.WriteLine($"Timer : {ufoTimer,-4}");
-            Console.Write($"inputX: {inputX} | playerX: {playerX}         ");
         }
+
         static void ReadInput()
         {
             while (spiel)
