@@ -716,7 +716,7 @@ namespace Spaceinvaders
                                 gegneranzahl = 50;
                                 gegner = gegneranzahl;
                                 schutz = true;
-                                schussanzahl = 7;
+                                schussanzahl = 10;
                                 livedif = 5;
                                 optionenfarbe = 1;
                                 break;
@@ -725,7 +725,7 @@ namespace Spaceinvaders
                                 gegneranzahl = 60;
                                 gegner = gegneranzahl;
                                 schutz = true;
-                                schussanzahl = 10;
+                                schussanzahl = 15;
                                 livedif = 3;
                                 optionenfarbe = 2;
                                 break;
@@ -734,7 +734,7 @@ namespace Spaceinvaders
                                 gegneranzahl = 70;
                                 gegner = gegneranzahl;
                                 schutz = true;
-                                schussanzahl = 10;
+                                schussanzahl = 20;
                                 livedif = 3;
                                 optionenfarbe = 3;
                                 break;
@@ -743,7 +743,7 @@ namespace Spaceinvaders
                                 gegneranzahl = 80;
                                 gegner = gegneranzahl;
                                 schutz = true;
-                                schussanzahl = 15;
+                                schussanzahl = 25;
                                 livedif = 3;
                                 optionenfarbe = 4;
                                 break;
@@ -752,7 +752,7 @@ namespace Spaceinvaders
                                 gegneranzahl = 99;
                                 gegner = gegneranzahl;
                                 schutz = false;
-                                schussanzahl = 20;
+                                schussanzahl = 40;
                                 livedif = 1;
                                 optionenfarbe = 5;
                                 break;
