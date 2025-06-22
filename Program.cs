@@ -216,18 +216,18 @@ namespace Spaceinvaders
             if (newPlayerX - 1 >= 0 && newPlayerX + 1 < grid.GetLength(1))
             {
                 // Spieler löschen
-                grid[playerY - 1, playerX] = ' ';
-                grid[playerY, playerX - 1] = ' ';
                 grid[playerY, playerX] = ' ';
-                grid[playerY, playerX + 1] = ' ';
+                grid[playerY + 1, playerX - 1] = ' ';
+                grid[playerY + 1, playerX] = ' ';
+                grid[playerY + 1, playerX + 1] = ' ';
 
                 playerX = newPlayerX;
 
                 // Spieler zeichnen
-                grid[playerY - 1, playerX] = player;
-                grid[playerY, playerX - 1] = player;
                 grid[playerY, playerX] = player;
-                grid[playerY, playerX + 1] = player;
+                grid[playerY + 1, playerX - 1] = player;
+                grid[playerY + 1, playerX] = player;
+                grid[playerY + 1, playerX + 1] = player;
             }
             inputX = 0;
 
@@ -442,10 +442,10 @@ namespace Spaceinvaders
             }
 
             // Spieler platzieren
-            grid[playerY - 1, playerX] = player;
-            grid[playerY, playerX - 1] = player;
             grid[playerY, playerX] = player;
-            grid[playerY, playerX + 1] = player;
+            grid[playerY + 1, playerX - 1] = player;
+            grid[playerY + 1, playerX] = player;
+            grid[playerY + 1, playerX + 1] = player;
 
 
             //Schutz plazieren
