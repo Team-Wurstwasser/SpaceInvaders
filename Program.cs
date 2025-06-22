@@ -89,7 +89,7 @@ namespace Spaceinvaders
             //ufo
             Random rand = new();
 
-            if (!ufoAktiv && rand.Next(1, 1000) < 20 && ufoTimer > 70)
+            if (!ufoAktiv && rand.Next(1, 1000) < 10 && ufoTimer > 70)
             {
                 ufoAktiv = true;
                 if (ufoBewegung)
