@@ -201,7 +201,7 @@ namespace Spaceinvaders
                         grid[reihe + 1, symbol] = ' ';
                         grid[reihe, symbol] = ' ';
                     }
-                    else if (grid[reihe, symbol] == 'v' && grid[reihe + 1, symbol] == player)
+                    else if (grid[reihe, symbol] == 'v' && grid[reihe + 1, symbol] == player && reihe != 28)
                     {
                         if (leben > 0)
                             leben--;
