@@ -443,10 +443,6 @@ namespace Spaceinvaders
 
             // Spieler platzieren
             grid[playerY, playerX] = player;
-            grid[playerY + 1, playerX - 1] = player;
-            grid[playerY + 1, playerX] = player;
-            grid[playerY + 1, playerX + 1] = player;
-
 
             //Schutz plazieren
             int schutzY = 22;
