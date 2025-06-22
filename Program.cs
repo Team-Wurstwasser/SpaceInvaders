@@ -213,7 +213,7 @@ namespace Spaceinvaders
 
             //spielerbewegung
             int newPlayerX = playerX + inputX;
-            if (newPlayerX - 1 >= 0 && newPlayerX + 1 < grid.GetLength(1))
+            if (newPlayerX - 2 >= 0 && newPlayerX + 2 < grid.GetLength(1))
             {
                 // Spieler löschen
                 grid[playerY, playerX] = ' ';
