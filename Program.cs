@@ -603,6 +603,7 @@ namespace Spaceinvaders
                                 break;
                             case 2:
                                 ShowEinstellungen();
+                                Console.Clear();
                                 break;
                             case 3:
                                 menu = false;
