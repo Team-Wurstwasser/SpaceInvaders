@@ -231,10 +231,6 @@ namespace Spaceinvaders
             }
             inputX = 0;
 
-
-
-
-
             //spieler schuss
             if (schuss == true && (grid[playerY - 1, playerX] == ' ') && (grid[playerY - 2, playerX] == ' ') && (grid[playerY - 2, playerX - 1] != '|') && (grid[playerY - 2, playerX + 1] != '|'))
             {
