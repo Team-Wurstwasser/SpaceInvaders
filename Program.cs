@@ -164,10 +164,6 @@ namespace Spaceinvaders
                 }
             }
 
-
-
-
-
             // gegner schuss
             for (int symbol = 0; symbol < grid.GetLength(1); symbol++)
             {
@@ -212,18 +208,30 @@ namespace Spaceinvaders
                         grid[reihe, symbol] = ' ';
                     }
                 }
-            } 
+            }
 
             //spielerbewegung
             int newPlayerX = playerX + inputX;
-            if (grid[playerY, newPlayerX] == ' ')
+            if (newPlayerX - 1 >= 0 && newPlayerX + 1 < grid.GetLength(1))
             {
-                grid[playerY, newPlayerX] = player;
+                // Spieler löschen
+                grid[playerY - 1, playerX] = ' ';
+                grid[playerY, playerX - 1] = ' ';
                 grid[playerY, playerX] = ' ';
+                grid[playerY, playerX + 1] = ' ';
 
                 playerX = newPlayerX;
+
+                // Spieler zeichnen
+                grid[playerY - 1, playerX] = player;
+                grid[playerY, playerX - 1] = player;
+                grid[playerY, playerX] = player;
+                grid[playerY, playerX + 1] = player;
             }
             inputX = 0;
+
+
+
 
 
             //spieler schuss
@@ -363,6 +371,7 @@ namespace Spaceinvaders
             Console.WriteLine($"Gegner: {gegner}");
             Console.WriteLine($"Score : {score}");
             Console.WriteLine($"Timer : {ufoTimer,-4}");
+            Console.Write($"inputX: {inputX} | playerX: {playerX}         ");
         }
         static void ReadInput()
         {
@@ -432,7 +441,11 @@ namespace Spaceinvaders
             }
 
             // Spieler platzieren
+            grid[playerY - 1, playerX] = player;
+            grid[playerY, playerX - 1] = player;
             grid[playerY, playerX] = player;
+            grid[playerY, playerX + 1] = player;
+
 
             //Schutz plazieren
             int schutzY = 22;
