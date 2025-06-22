@@ -43,6 +43,7 @@ namespace Spaceinvaders
         static int score;
         static bool exit;
         static bool schutz = true;
+        static int optionenfarbe = 1;
 
         static List<string> Scoreboardlist = new();
 
@@ -726,6 +727,7 @@ namespace Spaceinvaders
                                 schutz = true;
                                 schussanzahl = 7;
                                 livedif = 5;
+                                optionenfarbe = 1;
                                 break;
 
                             case 2:
@@ -734,6 +736,7 @@ namespace Spaceinvaders
                                 schutz = true;
                                 schussanzahl = 10;
                                 livedif = 3;
+                                optionenfarbe = 2;
                                 break;
 
                             case 3:
@@ -742,6 +745,7 @@ namespace Spaceinvaders
                                 schutz = true;
                                 schussanzahl = 10;
                                 livedif = 3;
+                                optionenfarbe = 3;
                                 break;
 
                             case 4:
@@ -750,6 +754,7 @@ namespace Spaceinvaders
                                 schutz = true;
                                 schussanzahl = 15;
                                 livedif = 3;
+                                optionenfarbe = 4;
                                 break;
 
                             case 5:
@@ -758,6 +763,7 @@ namespace Spaceinvaders
                                 schutz = false;
                                 schussanzahl = 20;
                                 livedif = 1;
+                                optionenfarbe = 5;
                                 break;
 
                             case 6:
@@ -794,7 +800,14 @@ namespace Spaceinvaders
                     _ => ""
                 };
                 string zeiger = (i + 1 == selected) ? "> " : "  ";
-                Console.WriteLine($"|  {zeiger} {option,-58}|");
+                Console.Write($"|  {zeiger}");
+                if (optionenfarbe == i + 1)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                }
+                Console.Write($" {option,-58}");
+                Console.ResetColor();
+                Console.WriteLine($"|");
             }
 
             Console.WriteLine(
