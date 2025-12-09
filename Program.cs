@@ -1,11 +1,5 @@
 namespace Spaceinvaders
 {
-    using System;
-    using System.Threading;
-    using System.Collections.Generic;
-    using System.Reflection;
-    using System.Diagnostics.Metrics;
-
     class Program
     {
         // Spielfeld
