@@ -1,3 +1,26 @@
+
+nils stinkt
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 namespace Spaceinvaders
 {
     cgrid[ufoY, symbol + 1] == '|')
